@@ -138,9 +138,10 @@ a:hover {
 
 /* style du logo lorsque l'on passe la souris dessus */
 
-.logo:hover {
-    border: 4px solid #007BFF; /* augmente la taille du contour */
+.logo:hover, .logo_2:hover {
+    border: 4px solid var(--orange-dark3); /* augmente la taille du contour */
 }
+
 
 label {
    
