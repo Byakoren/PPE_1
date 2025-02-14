@@ -4,6 +4,7 @@
     --orange-light:#FC8E83 ;
     --orange-dark: #F22727;
     --orange-dark2: #F24C27;
+    --orange-dark3: #F26619;
     --darkest: #0b1531 ;
 }
 
@@ -63,7 +64,7 @@ h2 {
 button {
     width: 100%; /* Fait en sorte que le bouton remplisse toute la largeur disponible */
     padding: 10px; /* Ajoute un espace intérieur */
-    background-color: #007BFF; /* Définit une couleur de fond bleue */
+    background-color: var(--orange-dark3); /* Définit une couleur de fond bleue */
     color: white; /* Texte en blanc */
     border: none; /* Supprime la bordure */
     border-radius: 5px; /* Arrondi les coins */
@@ -73,7 +74,7 @@ button {
 
 /* Style du bouton lorsqu'on passe la souris dessus */
 button:hover {
-    background-color: #0056b3; /* Assombrit le bleu au survol */
+    background-color: var(--orange-dark2); /* Assombrit le bleu au survol */
 }
 
 /* Style du paragraphe contenant le lien d'inscription ou de connexion */
@@ -84,7 +85,7 @@ p {
 
 /* Style du lien (S'inscrire, Se connecter) */
 a {
-    color: #007BFF; /* Définit une couleur bleue pour le lien */
+    color: var(--orange-dark3); /* Définit une couleur pour le lien */
     text-decoration: none; /* Supprime le soulignement par défaut */
 }
 
@@ -101,7 +102,7 @@ a:hover {
     width: 100px; /* Définit une largeur */
     height: 100px; /* Définit une hauteur */
     border-radius: 50%; /* arondie l'image */
-    border: 3px solid #007BFF; /* Ajoute un contour bleu */
+    border: 3px solid var(--orange-dark3); /* Ajoute un contour et la couleur */
     overflow: hidden; /* Cache tout ce qui dépasse du cercle */
     display: flex; /* Active le mode flexbox pour centrer l'image */
     justify-content: center; /* Centre l'image horizontalement */
@@ -118,7 +119,7 @@ a:hover {
 /* style du logo lorsque l'on passe la souris dessus */
 
 .logo:hover {
-    border: 4px solid #007BFF; /* augmente la taille du contour */
+    border: 4px solid var(--orange-dark3); /* augmente la taille du contour */
 }
 
 
