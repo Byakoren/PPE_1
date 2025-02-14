@@ -1,0 +1,178 @@
+/*
+Projet professionnel commun
+BTS SIO SLAM 2025
+Mathieu MOURAO,Thomas GOUEZ et Mehdi NAOUI
+*/
+
+:root{
+    --lightest:#F2F2F2 ;
+    --orange-light:#FC8E83 ;
+    --orange-dark: #F22727;
+    --orange-dark2: #F24C27;
+    --darkest: #0b1531 ;
+
+}
+html{
+    background-color: var(--darkest);
+   
+}
+
+
+body{
+    background-color: var(--lightest);
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    /*border: 1px solid rgb(0, 0, 0);*/
+    border-radius: 1% 1% 1% 1%;
+    box-shadow: inset 1px 1px 5px .05px ;
+    height: 100vh;
+}
+
+#menu{
+   /* border: 1px solid rgb(0, 170, 28);*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+}
+
+
+#logo{
+    /*border: 1px solid red;*/
+    overflow: scroll;
+    width: 15rem;
+    height: auto;
+}
+
+#menu-list{
+    width: 60%;
+
+    display: flex;
+    flex-direction: row;
+    
+    margin-top: 30px;
+    justify-content: space-between;
+    /*border: 1px solid green;*/
+}
+
+#menu-list li{
+    /*border: 1px solid red;*/
+    list-style: none;
+    font-family: roboto;
+}
+
+.flex-center-col{
+    display: flex;
+    flex-direction: column;
+    /*border: 1px solid red;*/
+
+    height: 100vw;
+
+
+}
+
+.flex-center-col-end{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    /*border: 1px solid red;*/
+
+    
+
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /*border: 1px solid blue;*/
+}
+
+h3{
+    margin: 0.2rem;
+    text-align: center;
+    font-family: "Playfair Display", serif;
+}
+
+#time-date{
+
+    border: .05rem solid var(--darkest);
+    border-radius: 30px;
+
+    background-color: var(--darkest);
+    color: var(--lightest);
+
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    margin-top: 2.5rem;
+    margin-right: 5rem;
+
+    text-align: center;
+    font-family: "Roboto", serif;
+}
+
+#time-date > p{
+   /* border: 0.02rem solid red;*/
+    padding-bottom: .1rem;
+    padding-top: .1rem;
+    margin-bottom: .1rem;
+    margin-top: .1rem;
+
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+}
+
+
+#welcome{
+    /*border: 1px solid blue;*/
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    border: .05rem solid var(--darkest);
+    border-radius: 30px;
+
+    background-color: var(--darkest);
+    color: var(--orange-light);
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0.6rem;
+    padding-left: 0.6rem;
+}
+
+.links{
+    color: var(--darkest);
+    text-decoration: none;
+    
+    
+}
+
+
+
+.links:visited{
+    color: var(--darkest);
+    
+    
+}
+
+.links:hover{
+    color: var(--orange-dark);
+    
+    
+}
+
+#calendar{
+    margin:auto;
+    width: 80%;
+    height:80%;
+}
+
+
