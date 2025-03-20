@@ -14,6 +14,7 @@ Mathieu MOURAO,Thomas GOUEZ et Mehdi NAOUI
 }
 html{
     background-color: var(--darkest);
+    height: 80vh;
    
 }
 
@@ -71,7 +72,7 @@ body{
     flex-direction: column;
     /*border: 1px solid red;*/
 
-    height: 100vw;
+    height: fit-content;
 
 
 }
@@ -172,7 +173,7 @@ h3{
 #calendar{
     margin:auto;
     width: 80%;
-    height:80%;
+    height:fit-content;
 }
 
 
