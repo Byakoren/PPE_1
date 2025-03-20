@@ -12,7 +12,7 @@
         include "menu.php";
         ?>
     </header>
-    <main id="main-section">
+    
     <main class="flex-center-col">
     <?php    
     include "time.php";
