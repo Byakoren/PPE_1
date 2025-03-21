@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+<div class="container">
+    <div class="form-box">
+        <h2>Connexion</h2>
+        {% if error %}
+            <p style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        {% endif %}
+        <form method="POST">
+            <div class="input-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="_username" value="{{ last_username }}" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="_password" required>
+            </div>
+            <button type="submit">Se connecter</button>
+            <p>Pas encore inscrit ? <a href="{{ path('app_register') }}">S'inscrire</a></p>
+        </form>
+    </div>
+</div>
+{% endblock %}
