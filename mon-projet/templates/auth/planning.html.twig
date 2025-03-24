@@ -3,9 +3,10 @@
 {% block title %}Planning{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{# <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> #}
+<link rel="stylesheet" href="{{ asset('css/planning.css') }}">
 
-<!-- ✅ FullCalendar CSS -->
+
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 
 <div class="container">
@@ -15,7 +16,7 @@
     </div>
 </div>
 
-<!-- ✅ FullCalendar JS (placé en bas pour éviter le chargement avant HTML) -->
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <script>
