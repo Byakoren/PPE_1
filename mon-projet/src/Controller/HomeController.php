@@ -21,5 +21,12 @@ class HomeController extends AbstractController
     {
         return $this->render('auth/planning.html.twig');
     }
+
+    #[Route('/emargement', name: 'app_emargement_test')]
+    public function emargementTest(): Response
+    {
+        return $this->render('auth/emargement.html.twig');
+    }
+
 }
 

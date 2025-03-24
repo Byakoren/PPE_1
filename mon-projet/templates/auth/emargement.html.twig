@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Émargement{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/planning.css') }}">
+
+<div class="container">
+    <div class="form-box">
+        <h2>Signature de présence</h2>
+        <p>Cliquez dans la zone ci-dessous pour signer votre présence :</p>
+        
+        <canvas id="signature-pad" width="400" height="200" style="border:2px solid var(--orange-dark3); border-radius: 8px;"></canvas>
+        
+        <div style="margin-top: 20px;">
+            <button id="clear">Effacer</button>
+            <button id="validate">Valider</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+
+<script>
+    const canvas = document.getElementById('signature-pad');
+    const signaturePad = new SignaturePad(canvas);
+
+    document.getElementById('clear').addEventListener('click', () => {
+        signaturePad.clear();
+    });
+
+    document.getElementById('validate').addEventListener('click', () => {
+        if (signaturePad.isEmpty()) {
+            alert("Veuillez signer avant de valider !");
+            return;
+        }
+
+        const signatureData = signaturePad.toDataURL();
+        console.log("Signature en base64 :", signatureData);
+
+        alert("Signature capturée avec succès (non encore enregistrée).");
+        // plus tard : POST vers une route Symfony pour sauvegarder
+    });
+</script>
+{% endblock %}

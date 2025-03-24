@@ -52,8 +52,9 @@
                 }
             ],
             eventClick: function(info) {
-                alert("Redirection vers l'émargement du cours : " + info.event.title);
+                window.location.href = "/emargement";
             }
+
         });
 
         calendar.render();
