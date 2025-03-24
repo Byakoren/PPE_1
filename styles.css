@@ -13,9 +13,9 @@ Mathieu MOURAO,Thomas GOUEZ et Mehdi NAOUI
 
 }
 html{
-    background-color: var(--darkest);
-    height: 80vh;
-   
+    
+    height: 100vh;
+    background: linear-gradient(20deg, rgba(2,0,36,1) 14%, rgba(27,42,89,1) 59%, rgba(39,50,115,1) 90%); /* Définit la couleur de fond de la page */
 }
 
 
@@ -28,6 +28,7 @@ body{
     border-radius: 1% 1% 1% 1%;
     box-shadow: inset 1px 1px 5px .05px ;
     height: 100vh;
+    
 }
 
 #menu{
