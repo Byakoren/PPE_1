@@ -16,7 +16,6 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Récupère le dernier email saisi et les éventuelles erreurs
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -51,6 +50,6 @@ class AuthController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
-        // Symfony gère la déconnexion automatiquement
+
     }
 }

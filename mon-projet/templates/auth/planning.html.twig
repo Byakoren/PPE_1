@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+<!-- ✅ FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+
+<div class="container">
+    <div class="form-box">
+        <h2>Planning de vos cours</h2>
+        <div id='calendar'></div>
+    </div>
+</div>
+
+<!-- ✅ FullCalendar JS (placé en bas pour éviter le chargement avant HTML) -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: [
+                {
+                    id: 1,
+                    title: 'Maths - BTS SIO',
+                    start: '2025-03-25T09:00:00',
+                    end: '2025-03-25T11:00:00'
+                },
+                {
+                    id: 2,
+                    title: 'Économie - BTS Banque',
+                    start: '2025-03-26T14:00:00',
+                    end: '2025-03-26T16:00:00'
+                },
+                {
+                    id: 3,
+                    title: 'Réseaux - BTS SIO',
+                    start: '2025-03-27T13:00:00',
+                    end: '2025-03-27T15:00:00'
+                }
+            ],
+            eventClick: function(info) {
+                alert("Redirection vers l'émargement du cours : " + info.event.title);
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+{% endblock %}
