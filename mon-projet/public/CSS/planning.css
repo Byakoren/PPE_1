@@ -20,9 +20,13 @@ body {
 .container {
     width: 100%;
     max-width: 700px;
+    padding: 0 20px;
 }
 
 .form-box {
+    width: 100%;
+    max-width: 950px; /* ⬅️ augmente ici à ta convenance */
+    margin: 0 auto;
     background: white;
     padding: 27px;
     border-radius: 10px;
@@ -32,12 +36,15 @@ body {
 
 
 
+
 #calendar {
+    width: 100%;
     margin-top: 20px;
     background: var(--lightest);
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    
 }
 
 #calendar .fc {
@@ -118,3 +125,17 @@ body {
     font-weight: bold;
     border: none;
 }
+
+
+#calendar .fc-event {
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+
+#calendar .fc-event:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
