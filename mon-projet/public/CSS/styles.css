@@ -15,6 +15,7 @@ body {
     background: linear-gradient(20deg, rgba(2,0,36,1) 14%, rgba(27,42,89,1) 59%, rgba(39,50,115,1) 90%); /* Définit la couleur de fond de la page */
     display: flex; /* Utilise Flexbox pour centrer le contenu */
     justify-content: center; /* Centre horizontalement le contenu */
+    flex-direction: column;
     align-items: center; /* Centre verticalement le contenu */
     height: 100vh; /* Définit la hauteur de la page à 100% de la hauteur de la fenêtre */
     margin: 0; /* Supprime les marges par défaut du body */
