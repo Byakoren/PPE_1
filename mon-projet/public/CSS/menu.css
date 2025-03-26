@@ -1,0 +1,92 @@
+:root{
+    --lightest:#F2F2F2 ;
+    --orange-light:#FC8E83 ;
+    --orange-dark: #F22727;
+    --orange-dark2: #F24C27;
+    --darkest: #0b1531 ;
+
+}
+#menu{
+   /* border: 1px solid rgb(0, 170, 28);*/
+    padding-left: 7rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 2rem;
+
+    width: 100%;
+
+    background-color: var(--lightest);
+    border-radius: 15px;
+   
+
+    position: sticky;
+    top: 0;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
+    
+    
+   
+    /*box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;*/
+
+}
+
+
+
+
+#logo{
+    /*border: 1px solid red;*/
+    overflow: scroll;
+    width: 10rem;
+    height: auto;
+}
+
+#menu-list{
+    width: 70%;
+    padding-left: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    
+    
+    justify-content: space-evenly;
+    gap: 7rem;
+    /*border: 1px solid green;*/
+}
+
+#menu-list li{
+    /*border: 1px solid red;*/
+    list-style: none;
+    font-family: roboto;
+    font-size: small;
+    /*border: 1px solid #F24C27;*/
+    width: 100%;
+    height: 1rem;
+    
+}
+
+.links{
+    color: var(--darkest);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    
+}
+
+
+
+.links:visited{
+    color: var(--darkest);
+    
+    
+}
+
+.links:hover{
+    color: var(--orange-dark);
+    font-size: medium;
+    
+    
+}

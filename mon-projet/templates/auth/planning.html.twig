@@ -3,14 +3,19 @@
 {% block title %}Planning{% endblock %}
 
 {% block body %}
+
+
 {# <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> #}
+
+
 <link rel="stylesheet" href="{{ asset('css/planning.css') }}">
-
-
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 
+{% include 'auth/menu.html.twig' %}
 <div class="container">
+
     <div class="form-box">
+    
         <h2>Planning de vos cours</h2>
         <div id='calendar'></div>
     </div>

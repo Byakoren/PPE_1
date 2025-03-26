@@ -6,18 +6,23 @@
     --orange-dark3: #F26619;
     --darkest: #0b1531;
 }
+html{
+    height: 100%;
+}
 
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(20deg, rgba(2,0,36,1) 14%, rgba(27,42,89,1) 59%, rgba(39,50,115,1) 90%);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    
     margin: 0;
 }
 
 .container {
+    margin-top: 3rem;
     width: 100%;
     max-width: 700px;
 }
