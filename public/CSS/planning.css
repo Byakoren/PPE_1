@@ -1,0 +1,146 @@
+:root {
+    --lightest: #F2F2F2;
+    --orange-light: #FC8E83;
+    --orange-dark: #F22727;
+    --orange-dark2: #F24C27;
+    --orange-dark3: #F26619;
+    --darkest: #0b1531;
+}
+html{
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(20deg, rgba(2,0,36,1) 14%, rgba(27,42,89,1) 59%, rgba(39,50,115,1) 90%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    margin: 0;
+}
+
+.container {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 950px; /* ⬅️ augmente ici à ta convenance */
+    margin: 0 auto;
+    background: white;
+    padding: 27px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    text-align: center;
+}
+
+
+
+
+#calendar {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--lightest);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    
+}
+
+#calendar .fc {
+    font-family: inherit;
+}
+
+#calendar .fc-header-toolbar {
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#calendar .fc-button {
+    color: white !important;
+    background-color: var(--orange-dark3) !important;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+#calendar .fc-button:hover {
+    background-color: var(--orange-dark2) !important;
+}
+
+#calendar .fc-button-primary:not(:disabled).fc-button-active,
+#calendar .fc-button-primary:not(:disabled):active {
+    background-color: var(--orange-dark) !important;
+}
+
+#calendar .fc-toolbar-title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#calendar .fc-col-header-cell-cushion,
+#calendar .fc-daygrid-day-number {
+    font-weight: bold;
+    color: var(--orange-dark3);
+}
+
+#calendar .fc-event {
+    font-size: 0.9em;
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+#calendar .fc-scroller::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+#calendar .fc-scroller {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+
+#calendar .fc-daygrid-event {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    font-size: 0.85em;
+    line-height: 1.2;
+    padding: 1px 2px;
+}
+
+
+#calendar .fc-daygrid-day-frame {
+    min-height: 70px;
+}
+
+
+#calendar .fc-event {
+    background-color: var(--orange-dark3);
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+
+#calendar .fc-event {
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+
+#calendar .fc-event:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+

@@ -1,3 +1,4 @@
+
 ### **PPE - Projet Professionnel Commun**
 
 ### 🎯 Objectif du projet
@@ -137,3 +138,4 @@ Aller plus loin
     GitHub Pages: Héberger un site web pour votre projet.
 
 En résumé, GitHub offre un ensemble d'outils puissants pour gérer efficacement votre projet. En combinant les issues, les projets et les branches, vous pouvez organiser votre travail, suivre votre progression et collaborer efficacement avec votre équipe.
+

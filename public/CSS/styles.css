@@ -1,0 +1,150 @@
+/* palette de couleur */
+:root {
+    --lightest:#F2F2F2 ;
+    --orange-light:#FC8E83 ;
+    --orange-dark: #F22727;
+    --orange-dark2: #F24C27;
+    --orange-dark3: #F26619;
+    --darkest: #0b1531 ;
+    
+}
+
+/* Applique des styles généraux à la page */
+body {
+    font-family: Arial, sans-serif; /* Définit la police d'écriture */
+    background: linear-gradient(20deg, rgba(2,0,36,1) 14%, rgba(27,42,89,1) 59%, rgba(39,50,115,1) 90%); /* Définit la couleur de fond de la page */
+    display: flex; /* Utilise Flexbox pour centrer le contenu */
+    justify-content: center; /* Centre horizontalement le contenu */
+    flex-direction: column;
+    align-items: center; /* Centre verticalement le contenu */
+    height: 100vh; /* Définit la hauteur de la page à 100% de la hauteur de la fenêtre */
+    margin: 0; /* Supprime les marges par défaut du body */
+}
+
+/* Conteneur principal qui enveloppe le formulaire */
+.container {
+    width: 100%; /* Fait en sorte que le conteneur prenne toute la largeur disponible */
+    max-width: 500px; /* Définit une largeur maximale de 400px */
+}
+
+/* Boîte contenant le formulaire */
+.form-box {
+    background: white; /* Fond blanc */
+    padding: 27px; /* Ajoute un espace intérieur de 20px */
+    border-radius: 10px; /* Arrondi les coins */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1); /* Ajoute une ombre légère autour de la boîte */
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+/* Style du titre (Connexion, Inscription) */
+h2 {
+    margin-bottom: 20px; /* Ajoute un espace sous le titre */
+}
+
+/* Groupe de champs (label + input) */
+.input-group {
+    margin-bottom: 20px; /* Ajoute un espace entre chaque groupe de champ */
+    text-align: left; /* Aligne le texte du label à gauche */
+    width: 93%; /* Définit la largeur du groupe à 93% du parent */
+}
+
+/* Style du label (nom d’utilisateur, email, mot de passe) */
+.input-group label {
+    display: block; /* Affiche le label sur une nouvelle ligne */
+    font-weight: bold; /* Met le texte en gras */
+}
+
+/* Style des champs de saisie (email, mot de passe, etc.) */
+.input-group input {
+    width: 100%; /* Remplit entièrement la largeur de son parent */
+    padding: 10px; /* Ajoute un espace intérieur pour améliorer la lisibilité */
+    border: 1px solid #ccc; /* Ajoute une bordure grise */
+    border-radius: 8px; /* Arrondi les bords de l'input */
+}
+
+/* Style du bouton */
+button {
+    width: 100%; /* Fait en sorte que le bouton remplisse toute la largeur disponible */
+    padding: 10px; /* Ajoute un espace intérieur */
+    background-color: var(--orange-dark3); /* Définit une couleur de fond bleue */
+    color: white; /* Texte en blanc */
+    border: none; /* Supprime la bordure */
+    border-radius: 5px; /* Arrondi les coins */
+    cursor: pointer; /* Change le curseur en "main" au survol */
+    font-size: 1em; /* définie la taille du text */
+}
+
+/* Style du bouton lorsqu'on passe la souris dessus */
+button:hover {
+    background-color: var(--orange-dark2); /* Assombrit le bleu au survol */
+}
+
+/* Style du paragraphe contenant le lien d'inscription ou de connexion */
+p {
+    margin-top: 15px; /* Ajoute un espace au-dessus du paragraphe */
+    font-size: small; /* définie la taille du paragraphe */
+    
+}
+
+/* Style du lien (S'inscrire, Se connecter) */
+a {
+    color: var(--orange-dark3); /* Définit une couleur pour le lien */
+    text-decoration: none; /* Supprime le soulignement par défaut */
+}
+
+/* Style du lien lorsqu'on passe la souris dessus */
+a:hover {
+    text-decoration: underline; /* Ajoute un soulignement au survol */
+}
+
+/* style du logo gefor */
+
+.logo {
+    position: absolute; /* Permet un positionement libre */
+    top: 9%; /* Place l'image a partir du haut */
+    width: 100px; /* Définit une largeur */
+    height: 100px; /* Définit une hauteur */
+    border-radius: 50%; /* arondie l'image */
+    border: 3px solid var(--orange-dark3); /* Ajoute un contour et la couleur */
+    overflow: hidden; /* Cache tout ce qui dépasse du cercle */
+    display: flex; /* Active le mode flexbox pour centrer l'image */
+    justify-content: center; /* Centre l'image horizontalement */
+    align-items: center; /* Centre l'image verticalement */
+    background-color: white; /* couleur du fond */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}    
+
+.logo_2 {
+    position: absolute; /* Permet un positionement libre */
+    top: 14%; /* Place l'image a partir du haut */
+    width: 100px; /* Définit une largeur */
+    height: 100px; /* Définit une hauteur */
+    border-radius: 50%; /* arondie l'image */
+    border: 3px solid var(--orange-dark3); /* Ajoute un contour et la couleur */
+    overflow: hidden; /* Cache tout ce qui dépasse du cercle */
+    display: flex; /* Active le mode flexbox pour centrer l'image */
+    justify-content: center; /* Centre l'image horizontalement */
+    align-items: center; /* Centre l'image verticalement */
+    background-color: white; /* couleur du fond */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+
+.logo img, .logo_2 img {
+    width: 140%; /* Agrandit l'image de 40% pour remplir complètement le cercle */
+    height: auto; /* Maintient le ratio de l'image sans la déformer */
+    border-radius: 50%; /* arrondie l'image */
+    
+}    
+
+/* style du logo lorsque l'on passe la souris dessus */
+
+.logo:hover, .logo_2:hover {
+    border: 4px solid var(--orange-dark3); /* augmente la taille du contour */
+}
+
+
+label {
+   
+    padding-bottom: 8px;
+}
