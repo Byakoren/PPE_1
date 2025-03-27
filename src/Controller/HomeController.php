@@ -28,5 +28,11 @@ class HomeController extends AbstractController
         return $this->render('auth/emargement.html.twig');
     }
 
+    #[Route('/profil', name: 'profil_route')]
+    public function profil(): Response
+    {
+        return $this->render('auth/profil.html.twig');
+    }
+
 }
 
