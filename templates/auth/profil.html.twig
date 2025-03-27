@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/profil.css') }}">
+
+{% include 'auth/menu.html.twig' %}
+
+<div class="profile-wrapper">
+    <h1>Mon Profil</h1>
+
+    <form method="POST" action="#" enctype="multipart/form-data" class="profile-form">
+
+        <fieldset>
+            <legend>Informations générales</legend>
+
+            <div class="form-row">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" value="Jean">
+            </div>
+
+            <div class="form-row">
+                <label for="nom">Nom de famille</label>
+                <input type="text" id="nom" name="nom" value="Dupont">
+            </div>
+
+            <div class="form-row">
+                <label for="email">Adresse de courriel</label>
+                <input type="email" id="email" name="email" value="utilisateur@example.com">
+            </div>
+
+            <div class="form-row">
+                <label for="visibilite">Visibilité de l'adresse de courriel</label>
+                <select id="visibilite" name="visibilite">
+                    <option value="cachee">Cachée</option>
+                    <option value="publique">Publique</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Avatar utilisateur</legend>
+
+            <div class="form-row avatar-section">
+                <div class="avatar-preview">
+                    <img src="{{ asset('images/photo_profil.png') }}" alt="Avatar actuel">
+                    <label><input type="checkbox" name="delete-avatar"> Supprimer</label>
+                </div>
+
+                <div class="upload-zone">
+                    <label for="profile-image">Nouvelle image</label>
+                    <input type="file" id="profile-image" name="profile-image">
+                    <p class="hint">Types acceptés : .jpg, .jpeg, .png, .gif (max 5 Mo)</p>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Sécurité</legend>
+
+            <div class="form-row">
+                <label for="new-password">Nouveau mot de passe</label>
+                <input type="password" id="new-password" name="new-password">
+            </div>
+        </fieldset>
+
+        <button type="submit" class="save-btn">Enregistrer les modifications</button>
+    </form>
+</div>
+{% endblock %}

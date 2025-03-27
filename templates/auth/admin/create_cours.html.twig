@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Créer un cours{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+<div class="container">
+    <div class="form-box">
+        <h2>Ajouter un cours</h2>
+        <form method="POST" action="#">
+            <div class="input-group">
+                <label for="title">Titre du cours :</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="input-group">
+                <label for="start">Date de début :</label>
+                <input type="datetime-local" id="start" name="start" required>
+            </div>
+            <div class="input-group">
+                <label for="end">Date de fin :</label>
+                <input type="datetime-local" id="end" name="end" required>
+            </div>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
