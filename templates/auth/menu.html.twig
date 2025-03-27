@@ -1,23 +1,37 @@
-
-
-
 {% block content %}
 
-<link rel="stylesheet" href="{{ asset('CSS/menu.css') }}">
+	{#<link rel="stylesheet" href="{{ asset('CSS/menu.css') }}">#}
 
-<nav id="menu">
-    <img id="logo" src="{{ asset('images/gefor_vect2.png') }}" alt="logo-gefor">
-    <ul id="menu-list">
-        <li class="main"><a href="index.php" class="links"><i class="fa-solid fa-house"></i> Acceuil</a></li>
-        <li class="menu-item-2"><a href="page2.php" class="links"><i class="fa-solid fa-file-signature"></i> Emargement</a></li>
-        <li class="menu-item-3"><a href="page3.php" class="links"><i class="fa-solid fa-phone"></i> Contacter</a></li>
-        <div class="user-profile">
-            <a href="{{ path('profil_route') }}">
-                <img src="{{ asset('images/photo_profil.png') }}" alt="Profil" class="profile-pic">
-            </a>
-        </div>
+	<nav id="menu" class="w-screen flex pl-28 py-4 gap-16 items-center bg-gray-200  rounded-lg">
+		<img id="logo" src="{{ asset('images/gefor_vect2.png') }}" alt="logo-gefor" class="w-40 object-contain transform-gpu will-change-transform text-2xl p-2 transition-all duration-300 ease-in-out hover:scale-105">
+		<ul id="menu-list" class="flex items-center gap-4 justify-around grow">
+			<li class="main flex justify-center items-center">
+				<a href="index.php" class=" text-[#273273] transform-gpu will-change-transform text-2xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+					<i class="fa-solid fa-house  "></i>
+					Accueil</a>
+			</li>
+			<li class="menu-item-2 main flex justify-center items-center">
+				<a href="page2.php" class="transform-gpu will-change-transform text-2xl p-2 transition-all  duration-300 ease-in-out transition-all text-[#273273] hover:text-[#F24C27] hover:scale-105">
+					<i class="fa-solid fa-file-signature"></i>
+					Emargement</a>
+			</li>
+			<li class="menu-item-3 main flex justify-center items-center">
+				<a href="page3.php" class=" transform-gpu will-change-transform text-2xl p-2 transition-all transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
+					<i class="fa-solid fa-phone"></i>
+					Contacter</a>
+			</li>
+			<div class="user-profile main flex justify-center items-center">
+				<a href="{{ path('profil_route') }}">
+					<img src="{{ asset('images/photo_profil.png') }}" alt="Profil" class=" transform-gpu will-change-transform w-20 h-20 rounded-full overflow-hidden shadow-[0px_4px_62px_-20px_#f97316] border-4 border-orange-500 object-cover transition duration-300 ease-in-out hover:shadow-[0px_4px_33px_-7px_rgba(59,_130,_246,_0.5)] hover:border-[#273273] hover:scale-105">
+				</a>
+			</div>
+			{#
+																																																																																																																																																																																																																																																																																																																																										<li class="profil">
+																																																																																																																																																																																																																																																																																																																																											<a href="profil.php" class="text-lg p-2 transition-all  hover:text-[#F24C27] hover:text-xl">
+																																																																																																																																																																																																																																																																																																																																												<i class="fa-solid fa-user"></i>
+																																																																																																																																																																																																																																																																																																																																												Profil</a>
+																																																																																																																																																																																																																																																																																																																																										</li>#}
+		</ul>
 
-    </ul>
-
-</nav>
+	</nav>
 {% endblock %}
