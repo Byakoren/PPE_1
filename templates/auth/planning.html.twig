@@ -1,67 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Planning
-{% endblock %}
+{% block title %}Planning{% endblock %}
 
 {% block body %}
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+
+    {% include 'auth/menu.html.twig' %}
+
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
+        <div class="w-full max-w-screen-xl mt-12 px-5">
+            <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
+
+                <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Planning de vos cours</h2>
+                <div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+
+            slotMinTime: "08:00:00",
+            slotMaxTime: "19:00:01",
 
 
-	{# <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> #}
+            events: [
+                {
+                    id: 1,
+                    title: 'Maths',
+                    start: '2025-03-25T09:00:00',
+                    end: '2025-03-25T12:30:00'
+                },
+                {
+                    id: 2,
+                    title: 'Économie',
+                    start: '2025-03-26T13:30:00',
+                    end: '2025-03-26T17:00:00'
+                },
+                {
+                    id: 3,
+                    title: 'Réseaux',
+                    start: '2025-03-27T13:00:00',
+                    end: '2025-03-27T15:00:00'
+                },
+				{
+				id: 4,
+				title: 'Anglais',
+				start: '2025-03-28T09:00:00',
+				end: '2025-03-28T12:30:00'
+				},
+				{
+				id: 5,
+				title: 'CEJM',
+				start: '2025-03-28T13:30:00',
+				end: '2025-03-28T17:00:00'
+				},
+            ],
+            eventClick: function (info) {
+                window.location.href = "/emargement";
+            }
+        });
 
+        calendar.render();
+    });
+</script>
 
-	<link rel="stylesheet" href="{{ asset('css/planning.css') }}">
-	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
-
-	{% include 'auth/menu.html.twig' %}
-	<div class="container">
-
-		<div class="form-box">
-
-			<h2>Planning de vos cours</h2>
-			<div id='calendar'></div>
-		</div>
-	</div>
-
-
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-var calendarEl = document.getElementById('calendar');
-
-var calendar = new FullCalendar.Calendar(calendarEl, {
-initialView: 'dayGridMonth',
-locale: 'fr',
-headerToolbar: {
-left: 'prev,next today',
-center: 'title',
-right: 'dayGridMonth,timeGridWeek,timeGridDay'
-},
-events: [
-{
-id: 1,
-title: 'Maths - BTS SIO',
-start: '2025-03-25T09:00:00',
-end: '2025-03-25T12:30:00'
-}, {
-id: 2,
-title: 'Économie - BTS Banque',
-start: '2025-03-26T13:30:00',
-end: '2025-03-26T17:00:00'
-}, {
-id: 3,
-title: 'Réseaux - BTS SIO',
-start: '2025-03-27T13:00:00',
-end: '2025-03-27T15:00:00'
-}
-],
-eventClick: function (info) {
-window.location.href = "/emargement";
-}
-
-});
-
-calendar.render();
-});
-	</script>
 {% endblock %}
