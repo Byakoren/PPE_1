@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Créer un utilisateur{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+<div class="container">
+    <div class="form-box">
+        <h2>Créer un utilisateur</h2>
+        <form method="POST" action="#">
+            <div class="input-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required>
+            </div>
+            <div class="input-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Créer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

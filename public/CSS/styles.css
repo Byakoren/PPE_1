@@ -24,7 +24,7 @@ body {
 /* Conteneur principal qui enveloppe le formulaire */
 .container {
     width: 100%; /* Fait en sorte que le conteneur prenne toute la largeur disponible */
-    max-width: 500px; /* Définit une largeur maximale de 400px */
+    max-width: 500px; /* Définit une largeur maximale de 500px */
 }
 
 /* Boîte contenant le formulaire */
@@ -148,3 +148,44 @@ label {
    
     padding-bottom: 8px;
 }
+
+#login-logo {
+    display: block;
+    margin: 0 auto 40px auto; /* Centre l'image et ajoute un espace en bas */
+    width: 120px; /* Ajuste la taille du logo */
+    height: 120px;
+    border-radius: 50%; /* Rend l'image circulaire */
+    border: 3px solid var(--orange-dark3); /* Ajoute une bordure */
+    padding: 5px; /* Espace intérieur */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7); /* Ajoute une légère ombre */
+    background-color: white;
+    padding: 3px;
+    animation: flipCoin 2s infinite linear;
+}
+
+@keyframes flipCoin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+/* Image de signature */
+#signature-image {
+    width: 600px; /* Réduit la taille de l'image */
+    height: auto;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    left: 20px; /* Place l'image à droite du formulaire */
+    opacity: 0.6;
+    z-index: -1;
+}
+
+
+
