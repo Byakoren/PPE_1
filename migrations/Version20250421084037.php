@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20250421084037 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE crenaux (id INT AUTO_INCREMENT NOT NULL, matiere_id INT DEFAULT NULL, date DATE NOT NULL, heure_debut TIME NOT NULL, heure_fin TIME NOT NULL, salle VARCHAR(1) DEFAULT NULL, INDEX IDX_AE70886BF46CD258 (matiere_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE groupe (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE matiere (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE participer (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, crenaux_id INT DEFAULT NULL, signature LONGTEXT DEFAULT NULL, INDEX IDX_EDBE16F8A76ED395 (user_id), INDEX IDX_EDBE16F8819C8220 (crenaux_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, groupe_id INT DEFAULT NULL, matiere_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, nom VARCHAR(25) NOT NULL, prenom VARCHAR(25) NOT NULL, INDEX IDX_8D93D6497A45358C (groupe_id), INDEX IDX_8D93D649F46CD258 (matiere_id), UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', available_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE crenaux ADD CONSTRAINT FK_AE70886BF46CD258 FOREIGN KEY (matiere_id) REFERENCES matiere (id)');
+        $this->addSql('ALTER TABLE participer ADD CONSTRAINT FK_EDBE16F8A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE participer ADD CONSTRAINT FK_EDBE16F8819C8220 FOREIGN KEY (crenaux_id) REFERENCES crenaux (id)');
+        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D6497A45358C FOREIGN KEY (groupe_id) REFERENCES groupe (id)');
+        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649F46CD258 FOREIGN KEY (matiere_id) REFERENCES matiere (id)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE crenaux DROP FOREIGN KEY FK_AE70886BF46CD258');
+        $this->addSql('ALTER TABLE participer DROP FOREIGN KEY FK_EDBE16F8A76ED395');
+        $this->addSql('ALTER TABLE participer DROP FOREIGN KEY FK_EDBE16F8819C8220');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D6497A45358C');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649F46CD258');
+        $this->addSql('DROP TABLE crenaux');
+        $this->addSql('DROP TABLE groupe');
+        $this->addSql('DROP TABLE matiere');
+        $this->addSql('DROP TABLE participer');
+        $this->addSql('DROP TABLE user');
+        $this->addSql('DROP TABLE messenger_messages');
+    }
+}
