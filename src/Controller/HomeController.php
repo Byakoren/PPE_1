@@ -43,7 +43,8 @@ class HomeController extends AbstractController
     {
         return $this->render('auth/profil.html.twig');
     }
-    
+
+  
 
 }
 
