@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CrenauxRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,20 +25,6 @@ class Crenaux
 
     #[ORM\Column(length: 1, nullable: true)]
     private ?string $salle = null;
-
-    #[ORM\ManyToOne(inversedBy: 'crenaux')]
-    private ?Matiere $Matiere = null;
-
-    /**
-     * @var Collection<int, Participer>
-     */
-    #[ORM\OneToMany(targetEntity: Participer::class, mappedBy: 'Crenaux')]
-    private Collection $participers;
-
-    public function __construct()
-    {
-        $this->participers = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -91,48 +75,6 @@ class Crenaux
     public function setSalle(?string $salle): static
     {
         $this->salle = $salle;
-
-        return $this;
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->Matiere;
-    }
-
-    public function setMatiere(?Matiere $Matiere): static
-    {
-        $this->Matiere = $Matiere;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Participer>
-     */
-    public function getParticipers(): Collection
-    {
-        return $this->participers;
-    }
-
-    public function addParticiper(Participer $participer): static
-    {
-        if (!$this->participers->contains($participer)) {
-            $this->participers->add($participer);
-            $participer->setCrenaux($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticiper(Participer $participer): static
-    {
-        if ($this->participers->removeElement($participer)) {
-            // set the owning side to null (unless already changed)
-            if ($participer->getCrenaux() === $this) {
-                $participer->setCrenaux(null);
-            }
-        }
 
         return $this;
     }

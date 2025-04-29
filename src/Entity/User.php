@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,26 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 25)]
     private ?string $prenom = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Groupe $Groupe = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Matiere $Matiere = null;
-
-    /**
-     * @var Collection<int, Participer>
-     */
-    #[ORM\OneToMany(targetEntity: Participer::class, mappedBy: 'User')]
-    private Collection $participers;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photo = null;
-
-    public function __construct()
-    {
-        $this->participers = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -154,72 +132,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getGroupe(): ?Groupe
-    {
-        return $this->Groupe;
-    }
-
-    public function setGroupe(?Groupe $Groupe): static
-    {
-        $this->Groupe = $Groupe;
-
-        return $this;
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->Matiere;
-    }
-
-    public function setMatiere(?Matiere $Matiere): static
-    {
-        $this->Matiere = $Matiere;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Participer>
-     */
-    public function getParticipers(): Collection
-    {
-        return $this->participers;
-    }
-
-    public function addParticiper(Participer $participer): static
-    {
-        if (!$this->participers->contains($participer)) {
-            $this->participers->add($participer);
-            $participer->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticiper(Participer $participer): static
-    {
-        if ($this->participers->removeElement($participer)) {
-            // set the owning side to null (unless already changed)
-            if ($participer->getUser() === $this) {
-                $participer->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): static
-    {
-        $this->photo = $photo;
 
         return $this;
     }
