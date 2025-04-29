@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +38,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 25)]
     private ?string $prenom = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Groupe $groupe = null;
+
+    /**
+     * @var Collection<int, Participer>
+     */
+    #[ORM\OneToMany(targetEntity: Participer::class, mappedBy: 'user')]
+    private Collection $participer;
+
+    public function __construct()
+    {
+        $this->participer = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -132,6 +148,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): static
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participer>
+     */
+    public function getParticiper(): Collection
+    {
+        return $this->participer;
+    }
+
+    public function addParticiper(Participer $participer): static
+    {
+        if (!$this->participer->contains($participer)) {
+            $this->participer->add($participer);
+            $participer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticiper(Participer $participer): static
+    {
+        if ($this->participer->removeElement($participer)) {
+            // set the owning side to null (unless already changed)
+            if ($participer->getUser() === $this) {
+                $participer->setUser(null);
+            }
+        }
 
         return $this;
     }
