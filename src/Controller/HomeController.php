@@ -16,17 +16,6 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
     
-    #[Route('/planning', name: 'app_planning')]
-    public function planning(): Response
-    {
-        return $this->render('auth/planning.html.twig');
-    }
-
-    #[Route('/emargement', name: 'app_emargement_test')]
-    public function emargementTest(): Response
-    {
-        return $this->render('auth/emargement.html.twig');
-    }
 
     #[Route('/admin/create-user', name: 'admin_create_user')]
     public function createUser(): Response {
@@ -44,6 +33,5 @@ class HomeController extends AbstractController
         return $this->render('auth/profil.html.twig');
     }
     
-
 }
 
