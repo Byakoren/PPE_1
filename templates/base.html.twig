@@ -12,19 +12,23 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> {% block stylesheets %}{% endblock %}
-            {{ encore_entry_link_tags('app') }}
+		{#Lien vers le styles css pour full calendar#}
+		{{ encore_entry_link_tags('app') }}
 
 		{% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+			{{ encore_entry_script_tags('app') }}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
 		{% endblock %}
 
 		<script src="https://cdn.tailwindcss.com"></script>
-
+		{#Lien vers le styles css pour full calendar#}
+		{{ encore_entry_link_tags('app') }}
 	</head>
 	<body>
 		{% block body %}{% endblock %}
+		{#Lien vers le app.js pour le fonctionnement de full calendar#}
+		{{ encore_entry_script_tags('app') }}
 	</body>
 </html>

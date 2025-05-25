@@ -1,50 +1,54 @@
 {% extends 'base.html.twig' %}
+{#Ici la logique a été changé le 25/05/2025#}
+{#
+  Mise à jour de l'intégration de FullCalendar :
 
-{% block title %}Planning{% endblock %}
+   Ancienne version (désormais supprimée) :
+    - Le calendrier FullCalendar était intégré via un CDN (jsDelivr).
+    - Le JavaScript et le CSS étaient écrits en dur dans ce fichier.
+    - Cela posait des problèmes de compatibilité avec la version 6.x (fichier CSS manquant).
+    - Difficulté à contrôler les dépendances et les styles.
 
-{% block body %}
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+   Nouvelle version (actuelle) :
+    - FullCalendar est maintenant installé en local via npm (@fullcalendar/core et @fullcalendar/daygrid).
+    - La compilation JS et CSS est gérée par Webpack Encore de Symfony.
+    - Le CSS est injecté automatiquement via {{ encore_entry_link_tags('app') }}.
+    - Le JS (y compris l'affichage du calendrier) est compilé dans `assets/app.js`, injecté avec {{ encore_entry_script_tags('app') }}.
 
-    {% include 'auth/menu.html.twig' %}
+   Les données (cours) sont transmises du contrôleur Symfony au JS via une variable globale `window.cours`
+    → Cela permet au script dans `app.js` d'afficher les événements dynamiques dans le calendrier.
 
-    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
-        <div class="w-full max-w-screen-xl mt-12 px-5">
-            <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
+   Objectif :
+    - Supprimer la dépendance au CDN
+    - Avoir un code plus maintenable, versionné, et compatible avec Webpack
+    - Garder le projet cohérent avec les bonnes pratiques Symfony
 
-                <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Planning de vos cours</h2>
-                <div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
-            </div>
-        </div>
-    </div>
+   Prérequis :
+    - Le contrôleur doit passer la variable `cours` à la vue
+    - Le fichier `assets/app.js` doit utiliser `window.cours` pour afficher les événements
 
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+#}
+	{% block title %}
+Planning
+{% endblock %}
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const calendarEl = document.getElementById('calendar');
-
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'fr',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-
-            slotMinTime: "08:00:00",
-            slotMaxTime: "19:00:01",
+	{% block body %}
 
 
-            events: {{ cours|json_encode|raw }},
+	{% include 'auth/menu.html.twig' %}
 
-            eventClick: function (info) {
-                window.location.href = "/emargement/" + info.event.id;
-            }
-        });
+		<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2"> <div class="w-full max-w-screen-xl mt-12 px-5">
+			<div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
 
-        calendar.render();
-    });
-</script>
+				<h2 class="text-2xl font-semibold mb-4 text-[#273273]">Planning de vos cours</h2>
+				{#div calendar est utilisé par JS pour affiché le calendrier#}
+				<div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
+			</div>
+		</div>
+	</div>
 
+	<script>
+		{#windows.cour est un objet auquel ont passe le json remonté par le back a travers le controller PlanningController.php#}
+window.cours = {{ cours|json_encode|raw }};
+	</script>
 {% endblock %}
