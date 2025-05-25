@@ -3,48 +3,20 @@
 {% block title %}Planning{% endblock %}
 
 {% block body %}
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 
     {% include 'auth/menu.html.twig' %}
+
+    <script>
+        window.calendarEvents = {{ cours|json_encode|raw }};
+    </script>
 
     <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
         <div class="w-full max-w-screen-xl mt-12 px-5">
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
-
                 <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Planning de vos cours</h2>
                 <div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const calendarEl = document.getElementById('calendar');
-
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'fr',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-
-            slotMinTime: "08:00:00",
-            slotMaxTime: "19:00:01",
-
-
-            events: {{ cours|json_encode|raw }},
-
-            eventClick: function (info) {
-                window.location.href = "/emargement/" + info.event.id;
-            }
-        });
-
-        calendar.render();
-    });
-</script>
 
 {% endblock %}
