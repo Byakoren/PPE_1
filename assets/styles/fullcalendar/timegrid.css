@@ -1,0 +1,14 @@
+
+.fc-timegrid-slot-label {
+  text-align: right;
+  padding: 0 4px;
+  font-size: 0.75em;
+  vertical-align: top;
+}
+.fc-timegrid-event {
+  background-color: #3788d8;
+  color: white;
+  border: none;
+  font-size: 0.85em;
+  border-radius: 3px;
+}
