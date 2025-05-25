@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+# Déclaration explicite de la route /api/login pour json_login
+api_login_check:
+    path: /api/login
+    methods: [POST]
