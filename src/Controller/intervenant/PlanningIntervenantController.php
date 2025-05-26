@@ -10,10 +10,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Controller\intervenant\PlanningIntervenantController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+#[Route("/intervenant", name: "intervenant")]
 final class PlanningIntervenantController extends AbstractController
 {
-    #[Route('/planning/intervenant', name: 'app_planning_intervenant')]
+    #[Route('/planning', name: 'app_planning_intervenant')]
     public function index(): Response
     {
         
