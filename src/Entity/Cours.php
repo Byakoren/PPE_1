@@ -34,6 +34,9 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Crenaux $crenaux = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?User $formateur = null;
+
     public function __construct()
     {
         $this->participer = new ArrayCollection();
@@ -118,6 +121,18 @@ class Cours
     public function setCrenaux(?Crenaux $crenaux): static
     {
         $this->crenaux = $crenaux;
+
+        return $this;
+    }
+
+    public function getFormateur(): ?User
+    {
+        return $this->formateur;
+    }
+
+    public function setFormateur(?User $formateur): static
+    {
+        $this->formateur = $formateur;
 
         return $this;
     }
