@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlanningController extends AbstractController
 {
-    #[Route('/planning', name: 'app_planning')]
+    #[Route('/planning', name: 'app_planning_apprenant')]
     public function index(CoursRepository $coursRepository): Response
     {
         $coursArray = array_map(function($cours) {

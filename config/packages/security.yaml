@@ -30,7 +30,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_planning
+                #default_target_path: app_planning
             logout:
                 path: app_logout
                 target: app_login
@@ -50,6 +50,8 @@ security:
         - { path: ^/api/login, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/planning, roles: ROLE_APPRENANT }
         - { path: ^/emargement, roles: ROLE_APPRENANT }
+        - { path: ^/intervenant, roles: ROLE_INTERVENANT }
+
         
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
