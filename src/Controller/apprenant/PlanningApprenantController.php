@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\apprenant;
 
 use App\Repository\CoursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class PlanningController extends AbstractController
+final class PlanningApprenantController extends AbstractController
 {
     #[Route('/planning', name: 'app_planning_apprenant')]
     public function index(CoursRepository $coursRepository): Response
@@ -27,7 +27,7 @@ final class PlanningController extends AbstractController
             ];
         }, $coursRepository->findAll());
 
-        return $this->render('auth/planning.html.twig', [
+        return $this->render('apprenant/planning.html.twig', [
             'cours' => $coursArray
         ]);
     }

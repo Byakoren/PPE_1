@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Controller;
+namespace App\Controller\apprenant;
 
 use App\Entity\Participer;
 use App\Repository\CoursRepository;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\SecurityBundle\Security;
 
-final class EmargementController extends AbstractController
+final class EmargementApprenantController extends AbstractController
 {
     #[Route('/emargement/{id}', name: 'app_emargement', methods: ['GET', 'POST'])]
     public function signer(
@@ -67,7 +67,7 @@ final class EmargementController extends AbstractController
         }
 
         // Affiche la page avec infos du cours et signature si existante
-        return $this->render('auth/emargement.html.twig', [
+        return $this->render('apprenant/emargement.html.twig', [
             'cours' => $cours,
             'signature' => $participation?->getSignature()
         ]);
