@@ -3,44 +3,62 @@
 {% block title %}Émargement{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ asset('css/planning.css') }}">
 
-{% include 'auth/menu.html.twig' %}
-<div class="container">
-    <div class="form-box">
-        <h2>Signature de présence</h2>
-        <p>Cliquez dans la zone ci-dessous pour signer votre présence :</p>
-        
-        <canvas id="signature-pad" width="400" height="200" style="border:2px solid var(--orange-dark3); border-radius: 8px;"></canvas>
-        
-        <div style="margin-top: 20px;">
-            <button id="clear">Effacer</button>
-            <button id="validate">Valider</button>
+    {# Inclusion du menu de navigation #}
+    {% include 'auth/menu.html.twig' %}
+
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
+        <div class="w-full max-w-screen-xl mt-12 px-5">
+            <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
+                <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Signature de présence</h2>
+
+                {# Si une signature existe en base64, on affiche le message + l'image #}
+                {% if signature %}
+                    <p class="text-green-700 font-medium mb-4">Vous avez déjà signé ce cours.</p>
+                    <img src="{{ signature }}" alt="Signature" class="mx-auto border border-gray-300 rounded-lg shadow-md w-96">
+
+                {# Sinon, on affiche le canvas et le formulaire pour signer #}
+                {% else %}
+                    <p class="mb-3 text-sm text-gray-600">Signez dans la zone ci-dessous puis validez :</p>
+
+                    <form method="post">
+                        <canvas id="signature-pad" width="400" height="200" class="border-2 border-orange-600 rounded-lg mx-auto mb-4"></canvas>
+
+                        {# Ce champ caché stockera la signature (en base64) avant envoi #}
+                        <input type="hidden" name="signature" id="signature">
+
+                        <div class="flex justify-center space-x-4">
+                            <button type="button" id="clear" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Effacer</button>
+                            <button type="submit" id="validate" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Valider</button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+    {# Librairie JS pour capturer et convertir la signature en base64 #}
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+    <script>
+        const canvas = document.getElementById('signature-pad');
+        const signaturePad = new SignaturePad(canvas);
 
-<script>
-    const canvas = document.getElementById('signature-pad');
-    const signaturePad = new SignaturePad(canvas);
+        // Bouton "Effacer" : vide le canvas
+        document.getElementById('clear').addEventListener('click', () => {
+            signaturePad.clear();
+        });
 
-    document.getElementById('clear').addEventListener('click', () => {
-        signaturePad.clear();
-    });
+        // Bouton "Valider" : vérifie et encode la signature en base64 dans le champ caché
+        document.getElementById('validate').addEventListener('click', (e) => {
+            if (signaturePad.isEmpty()) {
+                e.preventDefault();
+                alert("Veuillez signer avant de valider !");
+                return;
+            }
 
-    document.getElementById('validate').addEventListener('click', () => {
-        if (signaturePad.isEmpty()) {
-            alert("Veuillez signer avant de valider !");
-            return;
-        }
+            const signatureData = signaturePad.toDataURL(); // <- Ici se fait l'encodage en base64
+            document.getElementById('signature').value = signatureData;
+        });
+    </script>
 
-        const signatureData = signaturePad.toDataURL();
-        console.log("Signature en base64 :", signatureData);
-
-        alert("Signature capturée avec succès (non encore enregistrée).");
-        // plus tard : POST vers une route Symfony pour sauvegarder
-    });
-</script>
 {% endblock %}
