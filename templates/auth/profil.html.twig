@@ -1,73 +1,105 @@
+{# Hérite de la structure HTML de base définie dans base.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Profil
-{% endblock %}
+{# Définit le titre affiché dans l'onglet du navigateur #}
+{% block title %}Mon Profil{% endblock %}
 
+{# Contenu principal de la page #}
 {% block body %}
-	<link rel="stylesheet" href="{{ asset('css/profil.css') }}">
+    {# Inclusion du menu de navigation (barre du haut) #}
+    {% include 'auth/menu.html.twig' %}
 
-	{% include 'auth/menu.html.twig' %}
+    {# Conteneur principal centré, avec fond dégradé en Tailwind #}
+    <div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-4">
+        {# Carte blanche contenant le formulaire #}
+        <div class="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-8">
+            <h1 class="text-3xl font-bold text-center text-[#0b1531] mb-6">Mon Profil</h1>
 
-	<div class="profile-wrapper">
-		<h1>Mon Profil</h1>
+            {# Affichage des messages flash (succès, erreur, etc.) #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="mb-4 p-3 rounded-lg bg-green-100 text-green-800 font-semibold">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
-		<form method="POST" action="#" enctype="multipart/form-data" class="profile-form">
+            {# Démarre le formulaire Symfony, avec l'enctype requis pour l'upload de fichier #}
+            {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
 
-			<fieldset>
-				<legend>Informations générales</legend>
+                {# Section avatar + champ d’upload #}
+                <div class="flex items-center gap-6 mb-8">
+                    {# Cercle contenant l'image de l'avatar actuel ou par défaut #}
+                    <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-[#F26619] shadow-md">
+                        <img id="avatar-preview"
+                             src="{{ asset(user.avatar ? 'uploads/avatars/' ~ user.avatar : 'images/photo_profil.png') }}"
+                             alt="Avatar"
+                             class="w-full h-full object-cover">
+                    </div>
 
-				<div class="form-row">
-					<label for="prenom">Prénom</label>
-					<input type="text" id="prenom" name="prenom" value="Jean">
-				</div>
+                    {# Champ de formulaire : sélection d’un nouveau fichier d’image #}
+                    <div class="flex-1">
+                        <label for="{{ form.profileImage.vars.id }}" class="block mb-2 font-semibold text-gray-800">Changer d’avatar :</label>
+                        {{ form_widget(form.profileImage, {
+                            'attr': {
+                                'class': 'block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none'
+                            }
+                        }) }}
 
-				<div class="form-row">
-					<label for="nom">Nom de famille</label>
-					<input type="text" id="nom" name="nom" value="Dupont">
-				</div>
+                        {# Bouton de soumission du formulaire #}
+                        <button type="submit" class="mt-4 bg-[#F26619] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#F24C27] transition">
+                            Enregistrer l’image
+                        </button>
+                    </div>
+                </div>
 
-				<div class="form-row">
-					<label for="email">Adresse de courriel</label>
-					<input type="email" id="email" name="email" value="utilisateur@example.com">
-				</div>
+                {# Informations utilisateur affichées (lecture seule) #}
+                <div class="grid grid-cols-1 gap-4 mb-8">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Nom :</label>
+                        <input type="text" class="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2" value="{{ user.nom }}" readonly>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Prénom :</label>
+                        <input type="text" class="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2" value="{{ user.prenom }}" readonly>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Email :</label>
+                        <input type="email" class="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2" value="{{ user.email }}" readonly>
+                    </div>
+                </div>
 
-				<div class="form-row">
-					<label for="visibilite">Visibilité de l'adresse de courriel</label>
-					<select id="visibilite" name="visibilite">
-						<option value="cachee">Cachée</option>
-						<option value="publique">Publique</option>
-					</select>
-				</div>
-			</fieldset>
+                {# (optionnel) Lien vers le formulaire de changement de mot de passe, actuellement commenté #}
+                <div class="flex justify-between items-center">
+                    {# <a href="{{ path('change_password_route') }}" class="text-sm text-blue-600 hover:underline">Changer mon mot de passe</a> #}
+                </div>
 
-			<fieldset>
-				<legend>Avatar utilisateur</legend>
+            {# Fin du formulaire Symfony #}
+            {{ form_end(form) }}
+        </div>
+    </div>
 
-				<div class="form-row avatar-section">
-					<div class="avatar-preview">
-						<img src="{{ asset('images/photo_profil.png') }}" alt="Avatar actuel">
-						<label><input type="checkbox" name="delete-avatar">
-							Supprimer</label>
-					</div>
+    {# Script JS pour prévisualisation de l’image choisie avant soumission #}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sélectionne le champ input de type file
+            const input = document.querySelector('input[type="file"][name$="[profileImage][file]"]');
+            // Sélectionne l’image d’aperçu
+            const preview = document.querySelector('#avatar-preview');
 
-					<div class="upload-zone">
-						<label for="profile-image">Nouvelle image</label>
-						<input type="file" id="profile-image" name="profile-image">
-						<p class="hint">Types acceptés : .jpg, .jpeg, .png, .gif (max 5 Mo)</p>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Sécurité</legend>
-
-				<div class="form-row">
-					<label for="new-password">Nouveau mot de passe</label>
-					<input type="password" id="new-password" name="new-password">
-				</div>
-			</fieldset>
-
-			<button type="submit" class="save-btn">Enregistrer les modifications</button>
-		</form>
-	</div>
+            if (input && preview) {
+                input.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            // Met à jour dynamiquement le src de l’avatar avec la nouvelle image sélectionnée
+                            preview.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}

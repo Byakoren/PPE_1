@@ -14,6 +14,11 @@ use App\Repository\ParticiperRepository;
 use App\Repository\UserRepository;
 use App\Entity\Participer;
 
+/**
+ * Contrôleur API pour la gestion des cours et de l'émargement.
+ * Fournit des endpoints pour récupérer les cours d'un utilisateur
+ * et enregistrer l'émargement (signature) pour un cours donné.
+ */
 #[Route('/api', name: 'api_')]
 class ApiController extends AbstractController
 {

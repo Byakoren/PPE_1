@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------
+# VichUploaderBundle Configuration
+#
+# Ce bundle Symfony facilite l’upload et la gestion de fichiers
+# liés à des entités Doctrine (ex : images, PDF, documents).
+#
+# Il prend en charge :
+# - le stockage automatique du fichier dans un dossier défini
+# - la génération d’un nom de fichier unique (ou personnalisé)
+# - la liaison entre un champ de formulaire et une entité
+# - la mise à jour et suppression des anciens fichiers
+#
+# Dans ce projet, il est utilisé pour gérer l’upload d’avatars
+# utilisateurs, liés à l'entité "User".
+# ---------------------------------------------------------------
+
+vich_uploader:
+    # Type de driver utilisé pour les entités : ici Doctrine ORM
+    db_driver: orm
+
+    # Liste des mappings disponibles (chaque mapping = 1 usage précis)
+    mappings:
+        # Mapping utilisé pour les avatars d'utilisateur
+        user_avatar:
+            # URL publique pour accéder à l’image dans un navigateur
+            uri_prefix: /uploads/avatars
+
+            # Dossier sur le serveur où les fichiers sont physiquement stockés
+            upload_destination: '%kernel.project_dir%/public/uploads/avatars'
+
+            # Utilise un nom unique généré automatiquement pour éviter les conflits (via uniqid())
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+    # Exemple désactivé d’un autre mapping pour des produits
+    # mappings:
+    #     products:
+    #         uri_prefix: /images/products
+    #         upload_destination: '%kernel.project_dir%/public/images/products'
+    #         namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
