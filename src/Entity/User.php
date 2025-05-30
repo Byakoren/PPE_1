@@ -8,9 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -57,6 +62,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // Champ qui contiendra le token de réinitialisation envoyé par email
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $resetToken = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
+
+    #[Vich\UploadableField(mapping: 'user_avatar', fileNameProperty: 'avatar')]
+    #[Assert\File(maxSize: '5M')]
+    #[Ignore]
+    private ?File $profileImage = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
 
     public function __construct()
     {
@@ -251,6 +267,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function setProfileImage(?File $image = null): void
+    {
+        $this->profileImage = $image;
+
+        if ($image !== null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getProfileImage(): ?File
+    {
+        return $this->profileImage;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 

@@ -32,7 +32,7 @@ final class PlanningIntervenantController extends AbstractController
             ];
         }, $coursRepository->findAll());
 
-        return $this->render('auth/planning.html.twig', [
+        return $this->render('intervenant/\emargement_intervenant\index.html.twig', [
             'cours' => $coursArray
         ]);
     }

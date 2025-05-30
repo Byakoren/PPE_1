@@ -1,0 +1,15 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: GeMargement
+            description: >
+                Application d'émargement pour élèves – BTS SIO SLAM (2024/2025 – GEFOR).
+            version: 1.0.0
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc$)  # Toutes les routes de l'API sauf la doc elle-même
+
+    models:
+        use_jms: false
