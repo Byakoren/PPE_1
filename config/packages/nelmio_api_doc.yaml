@@ -1,11 +1,15 @@
 nelmio_api_doc:
-
     documentation:
         info:
             title: GeMargement
-            description: Créer une application d'émargement pour les élèves en utilisant une stack technologique moderne et des outils de gestion de projet collaboratifs. Ce projet s'inscrit dans le cadre du BTS SIO SLAM (session 2024/2025) à l'établissement GEFOR.
+            description: >
+                Application d'émargement pour élèves – BTS SIO SLAM (2024/2025 – GEFOR).
             version: 1.0.0
-    areas: # to filter documented areas
-        path_patterns:
-            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
-            
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc$)  # Toutes les routes de l'API sauf la doc elle-même
+
+    models:
+        use_jms: false
