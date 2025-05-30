@@ -4,7 +4,11 @@ namespace App\Controller\intervenant;
 
 
 use Psr\Log\LoggerInterface;
+use App\Repository\UserRepository;
+
 use App\Repository\CoursRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,10 +19,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class PlanningIntervenantController extends AbstractController
 {
     #[Route('intervenant/planning/', name: 'app_planning_intervenant')]
-    public function index(CoursRepository $coursRepository): Response
+    public function index(UserRepository $user , CoursRepository $coursRepository,Security $security): Response
     {
+      //$currentuser = $user->getId();
+       // $currentuser = $security->getUser();
+        
+        //dd($currentuser->getAvatar());
+        
         $coursArray = array_map(function($cours) {
             $creneau = $cours->getCrenaux();
+            
+
+          
 
             // Combine date + heure début / fin
             $start = new \DateTime($creneau->getDate()->format('Y-m-d') . ' ' . $creneau->getHeureDebut()->format('H:i:s'));
