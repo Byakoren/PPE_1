@@ -34,32 +34,38 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
 
     public function onLoginSuccess(LoginSuccessEvent $event): void
     {
-    //Récupère l'utilisateur qui vient de se connecter
-    $user = $event->getUser();
+        $request = $event->getRequest();
 
-    //On peut aussi utiliser le service Security pour vérifier les rôles ,
-    //c'est parfois plus clair
-    //$is_admin = $this->security->isGranted("admin_planning");
-    //$is_intervenant = $this->security->isGranted("intervenant_planning");
-    //is_apprenant = $this->security->isGranted("app_admin_planning");
+        if (str_starts_with($request->getPathInfo(),"/api")){
+            return;
+        }
+        //Récupère l'utilisateur qui vient de se connecter
+        $user = $event->getUser();
 
-    $roles = $user->getRoles();
-    $redirectPath = null;
+        //On peut aussi utiliser le service Security pour vérifier les rôles ,
+        //c'est parfois plus clair
+        //$is_admin = $this->security->isGranted("admin_planning");
+        //$is_intervenant = $this->security->isGranted("intervenant_planning");
+        //is_apprenant = $this->security->isGranted("app_admin_planning");
 
-    if (in_array('ROLE_ADMIN',$roles)){
-        //TODO Changer le app_login dans le redirect Path du ROLE_ADMIN
-        $redirectPath = $this->urlGenerator->generate("app_login");//<---- !!!!!TODO
-    }else if(in_array('ROLE_INTERVENANT', $roles)){
-        $redirectPath = $this->urlGenerator->generate("app_planning_intervenant");
-    }else if(in_array('ROLE_APPRENANT', $roles)){
-        $redirectPath = $this->urlGenerator->generate("app_planning_apprenant");
-    }else{
-        //Aucun role trouvé rediriger vers la page de login.
-        $redirectPath= $this->urlGenerator->generate("app_login");
-    }
-    $response = new RedirectResponse($redirectPath);
+        $roles = $user->getRoles();
+        $redirectPath = null;
 
-    $event->setResponse($response);
+        if (in_array('ROLE_ADMIN',$roles)){
+                //TODO Changer le app_login dans le redirect Path du ROLE_ADMIN
+                $redirectPath = $this->urlGenerator->generate("app_login");//<---- !!!!!TODO
+            }else if(in_array('ROLE_INTERVENANT', $roles)){
+                $redirectPath = $this->urlGenerator->generate("app_planning_intervenant");
+            }else if(in_array('ROLE_APPRENANT', $roles)){
+                $redirectPath = $this->urlGenerator->generate("app_planning_apprenant");
+            }else{
+                //Aucun role trouvé rediriger vers la page de login.
+                $redirectPath= $this->urlGenerator->generate("app_login");
+            }
+            $response = new RedirectResponse($redirectPath);
+
+            $event->setResponse($response);
+        
     }
         
     
