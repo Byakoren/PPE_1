@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EmargementIntervenantController!{% endblock %}
+{% block title %}Planning{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% include 'auth/menu.html.twig' %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/developement/project/ppe_emargement/ppe_emargement/src/Controller/EmargementIntervenantController.php</code></li>
-        <li>Your template at <code>C:/developement/project/ppe_emargement/ppe_emargement/templates/emargement_intervenant/index.html.twig</code></li>
-    </ul>
-</div>
+    <script>
+        window.calendarEvents = {{ cours|json_encode|raw }};
+    </script>
+
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
+        <div class="w-full max-w-screen-xl mt-12 px-5">
+            <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
+                <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Planning de vos cours</h2>
+                <div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
