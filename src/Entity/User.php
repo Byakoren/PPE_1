@@ -54,6 +54,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Cours::class, mappedBy: 'formateur')]
     private Collection $cours;
 
+    // Champ qui contiendra le token de réinitialisation envoyé par email
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $resetToken = null;
+
     public function __construct()
     {
         $this->participer = new ArrayCollection();
@@ -230,4 +234,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+
+    /**
+    * Retourne le token de réinitialisation du mot de passe (ou null s’il n’est pas défini)
+    */
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    /**
+    * Définit le token de réinitialisation du mot de passe
+    */
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+        return $this;
+    }
+
 }
