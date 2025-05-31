@@ -28,17 +28,20 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Grâce à VichUploaderBundle, le fichier est déjà géré automatiquement
 
-            // On enregistre les modifications en base de données
+            // Enregistrement des modifications
             $em->flush();
 
-            // Message flash de confirmation (affiché dans Twig)
+            //on vide le champ File pour éviter une erreur de sérialisation
+            $user->setProfileImage(null);
+
+            // Message de confirmation
             $this->addFlash('success', 'Profil mis à jour avec succès !');
 
-            // Redirection pour recharger la page (bonne pratique après POST)
+            // Redirection
             return $this->redirectToRoute('profil_route');
         }
 
-        // Affichage de la page de profil avec le formulaire et l'utilisateur
+        // Affichage de la page
         return $this->render('auth/profil.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
