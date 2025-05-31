@@ -36,9 +36,11 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        if (str_starts_with($request->getPathInfo(),"/api")){
+        // Ne rien faire pour l'API
+        if (str_starts_with($request->getPathInfo(), "/api")) {
             return;
         }
+
         //Récupère l'utilisateur qui vient de se connecter
         $user = $event->getUser();
 
@@ -53,7 +55,7 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
 
         if (in_array('ROLE_ADMIN',$roles)){
                 //TODO Changer le app_login dans le redirect Path du ROLE_ADMIN
-                $redirectPath = $this->urlGenerator->generate("app_login");//<---- !!!!!TODO
+                $redirectPath = $this->urlGenerator->generate("app_admin_dashboard"); // TODO: vérifier la route cible
             }else if(in_array('ROLE_INTERVENANT', $roles)){
                 $redirectPath = $this->urlGenerator->generate("app_planning_intervenant");
             }else if(in_array('ROLE_APPRENANT', $roles)){

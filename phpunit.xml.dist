@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         stopOnFailure="false">
+
+    <php>
+        <!-- Définit la classe Kernel utilisée par Symfony -->
+        <env name="KERNEL_CLASS" value="App\Kernel"/>
+
+        <!-- Active l'environnement de test -->
+        <env name="APP_ENV" value="test"/>
+
+        <!-- Active le mode debug -->
+        <env name="APP_DEBUG" value="1"/>
+
+        <!-- URL de la base de données pour les tests -->
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:8889/ppe_1_test_test"/>
+
+        <!-- Active les mails en mémoire (ne pas envoyer de vrai mail en test) -->
+        <env name="MAILER_DSN" value="null://null"/>
+    </php>
+
+    <!-- Où chercher les tests -->
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>
+
+

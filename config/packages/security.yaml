@@ -51,6 +51,7 @@ security:
         - { path: ^/planning, roles: ROLE_APPRENANT }
         - { path: ^/emargement, roles: ROLE_APPRENANT }
         - { path: ^/intervenant, roles: ROLE_INTERVENANT }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
         
 

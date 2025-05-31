@@ -1,3 +1,4 @@
+import './bootstrap.js';
 import './styles/fullcalendar/daygrid.css';
 import './styles/fullcalendar/timegrid.css';
 
