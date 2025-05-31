@@ -7,7 +7,14 @@
 		<ul id="menu-list" class="flex items-center gap-4 justify-around grow">
 
 			<li class="main flex justify-center items-center">
-				<a href="{{ path('app_planning_apprenant') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+				{% if  'ROLE_ADMIN' in app.user.roles %} 
+					<a href="{{ path('app_admin_dashboard') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+				{% elseif 'ROLE_INTERVENANT' in app.user.roles  %} 
+					<a href="{{ path('app_planning_intervenant') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+				{% else  %} 
+					<a href="{{ path('app_planning_apprenant') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+				{% endif %}
+				
 					<i class="fa-solid fa-house  "></i>
 					Accueil</a>
 			</li>
