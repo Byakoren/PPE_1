@@ -9,17 +9,21 @@
 
     {% include 'auth/menu.html.twig' %}
 
-    <script>
-        window.calendarEvents = {{ cours|json_encode|raw }};
-    </script>
+    
 
     <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
         <div class="w-full max-w-screen-xl mt-12 px-5">
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
                 <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Bonjour {{app.user.prenom}} <img class="w-10 inline" src="{{ asset("images/hand-waving-hand.gif") }}" alt="wavinghandgif"></h2>
-                <div id='calendar' class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
+                <div id='calendar' data-turbo="false" class="mt-5 bg-gray-100 rounded-xl p-3 shadow-md text-sm"></div>
             </div>
         </div>
     </div>
-
+    <script>
+        window.calendarEvents = {{ cours|json_encode|raw }};
+        //Attribution du role intervenant dans le champ role de l'object window JS pour la redirection émargement.
+        console.log('{{ app.user ? app.user.roles[0] : '' }}')
+        window.userRole = '{{ app.user ? app.user.roles[0] : '' }}';
+        console.log(` window.userRole =  ${window.userRole}`);
+    </script>
 {% endblock %}

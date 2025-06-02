@@ -11,7 +11,7 @@ import frLocale from '@fullcalendar/core/locales/fr';
 document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
     if (!calendarEl || !window.calendarEvents) return;
-
+    
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         initialView: 'timeGridWeek',
