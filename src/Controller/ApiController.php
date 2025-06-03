@@ -137,6 +137,14 @@ class ApiController extends AbstractController
             'cours' => $cours
         ]);
 
+        // ✅ Vérifie si une signature est déjà enregistrée
+        if ($participation && $participation->getSignature()) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Vous avez déjà émargé ce cours.'
+            ], 400);
+        }
+
         if (!$participation) {
             $participation = new Participer();
             $participation->setUser($user);
@@ -152,6 +160,7 @@ class ApiController extends AbstractController
             'message' => 'Émargement enregistré avec succès'
         ]);
     }
+
 
     #[Route('/cours/du-jour/{id}', name: 'api_cours_du_jour', methods: ['GET'])]
     public function getCoursDuJour(
@@ -179,12 +188,26 @@ class ApiController extends AbstractController
             return $this->json(['message' => 'Aucun cours trouvé à cette heure.']);
         }
 
+        $apprenants = [];
+        $participations = $cours->getParticiper();
+
+        foreach ($participations as $p) {
+            $user = $p->getUser();
+            $apprenants[] = [
+                'id' => $user->getId(),
+                'prenom' => $user->getPrenom(),
+                'nom' => $user->getNom(),
+                'signature' => $p->getSignature(),
+            ];
+        }
+
         return $this->json([
             'id' => $cours->getId(),
             'intitule' => $cours->getMatiere()?->getType(),
             'groupe' => $cours->getGroupe()?->getType(),
             'date' => $cours->getCrenaux()?->getDate()->format('Y-m-d'),
             'horaire' => $cours->getCrenaux()?->getHeureDebut()->format('H:i') . ' - ' . $cours->getCrenaux()?->getHeureFin()->format('H:i'),
+            'apprenants' => $apprenants,
         ]);
     }
 
