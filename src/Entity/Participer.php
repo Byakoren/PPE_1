@@ -23,6 +23,15 @@ class Participer
     #[ORM\ManyToOne(inversedBy: 'participer')]
     private ?Cours $cours = null;
 
+    #[ORM\Column]
+    private ?bool $validation = false;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateValidation = null;
+
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $retard = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +69,42 @@ class Participer
     public function setCours(?Cours $cours): static
     {
         $this->cours = $cours;
+
+        return $this;
+    }
+
+    public function isValidation(): ?bool
+    {
+        return $this->validation;
+    }
+
+    public function setValidation(bool $validation): static
+    {
+        $this->validation = $validation;
+
+        return $this;
+    }
+
+    public function getDateValidation(): ?\DateTimeInterface
+    {
+        return $this->dateValidation;
+    }
+
+    public function setDateValidation(?\DateTimeInterface $dateValidation): static
+    {
+        $this->dateValidation = $dateValidation;
+
+        return $this;
+    }
+
+    public function getRetard(): ?int
+    {
+        return $this->retard;
+    }
+
+    public function setRetard(int $retard): static
+    {
+        $this->retard = $retard;
 
         return $this;
     }
