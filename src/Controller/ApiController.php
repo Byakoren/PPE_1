@@ -137,7 +137,6 @@ class ApiController extends AbstractController
             'cours' => $cours
         ]);
 
-        // ✅ Vérifie si une signature est déjà enregistrée
         if ($participation && $participation->getSignature()) {
             return $this->json([
                 'success' => false,
@@ -149,6 +148,8 @@ class ApiController extends AbstractController
             $participation = new Participer();
             $participation->setUser($user);
             $participation->setCours($cours);
+            $participation->setValidation(false); 
+            $participation->setRetard(0); 
         }
 
         $participation->setSignature($signature);
@@ -250,5 +251,47 @@ class ApiController extends AbstractController
         ]);
     }
 
+    #[Route('/presence/valider', name: 'valider_presence', methods: ['POST'])]
+    public function validerPresence(
+        Request $request,
+        UserRepository $userRepo,
+        CoursRepository $coursRepo,
+        ParticiperRepository $participerRepo,
+        EntityManagerInterface $em
+    ): JsonResponse {
+        try {
+            $data = json_decode($request->getContent(), true);
+            $user = $userRepo->find($data['idUser']);
+            $cours = $coursRepo->find($data['idCours']);
+            $retard = $data['retard'] ?? 0;
+
+            if (!$user || !$cours) {
+                return $this->json(['success' => false, 'message' => 'Données invalides'], 400);
+            }
+
+            $participation = $participerRepo->findOneBy([
+                'user' => $user,
+                'cours' => $cours
+            ]);
+
+            if (!$participation) {
+                return $this->json(['success' => false, 'message' => 'Participation non trouvée'], 404);
+            }
+
+            $participation->setValidation(true);
+            $participation->setDateValidation(new \DateTime());
+            $participation->setRetard((int) $retard);
+
+            $em->persist($participation);
+            $em->flush();
+
+            return $this->json(['success' => true, 'message' => 'Présence validée']);
+        } catch (\Throwable $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Erreur serveur : ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
 }
