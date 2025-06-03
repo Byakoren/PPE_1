@@ -137,6 +137,14 @@ class ApiController extends AbstractController
             'cours' => $cours
         ]);
 
+        // ✅ Vérifie si une signature est déjà enregistrée
+        if ($participation && $participation->getSignature()) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Vous avez déjà émargé ce cours.'
+            ], 400);
+        }
+
         if (!$participation) {
             $participation = new Participer();
             $participation->setUser($user);
@@ -152,4 +160,95 @@ class ApiController extends AbstractController
             'message' => 'Émargement enregistré avec succès'
         ]);
     }
+
+
+    #[Route('/cours/du-jour/{id}', name: 'api_cours_du_jour', methods: ['GET'])]
+    public function getCoursDuJour(
+        int $id,
+        CoursRepository $coursRepo
+    ): JsonResponse {
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        $today = $now->format('Y-m-d');
+        $heure = $now->format('H:i:s');
+
+        $qb = $coursRepo->createQueryBuilder('c')
+            ->join('c.crenaux', 'cr')
+            ->where('c.formateur = :formateur')
+            ->andWhere('cr.date = :today')
+            ->andWhere('cr.heure_debut <= :heure')
+            ->andWhere('cr.heure_fin >= :heure')
+            ->setParameter('formateur', $id)
+            ->setParameter('today', $today)
+            ->setParameter('heure', $heure)
+            ->getQuery();
+
+        $cours = $qb->getOneOrNullResult();
+
+        if (!$cours) {
+            return $this->json(['message' => 'Aucun cours trouvé à cette heure.']);
+        }
+
+        $apprenants = [];
+        $participations = $cours->getParticiper();
+
+        foreach ($participations as $p) {
+            $user = $p->getUser();
+            $apprenants[] = [
+                'id' => $user->getId(),
+                'prenom' => $user->getPrenom(),
+                'nom' => $user->getNom(),
+                'signature' => $p->getSignature(),
+            ];
+        }
+
+        return $this->json([
+            'id' => $cours->getId(),
+            'intitule' => $cours->getMatiere()?->getType(),
+            'groupe' => $cours->getGroupe()?->getType(),
+            'date' => $cours->getCrenaux()?->getDate()->format('Y-m-d'),
+            'horaire' => $cours->getCrenaux()?->getHeureDebut()->format('H:i') . ' - ' . $cours->getCrenaux()?->getHeureFin()->format('H:i'),
+            'apprenants' => $apprenants,
+        ]);
+    }
+
+    #[Route('/cours/du-jour-apprenant/{id}', name: 'api_cours_du_jour_apprenant', methods: ['GET'])]
+    public function getCoursDuJourApprenant(
+        int $id,
+        ParticiperRepository $participerRepo
+    ): JsonResponse {
+        $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+        $today = $now->format('Y-m-d');
+        $heure = $now->format('H:i:s');
+
+        $qb = $participerRepo->createQueryBuilder('p')
+            ->join('p.cours', 'c')
+            ->join('c.crenaux', 'cr')
+            ->where('p.user = :user')
+            ->andWhere('cr.date = :today')
+            ->andWhere('cr.heure_debut <= :heure')
+            ->andWhere('cr.heure_fin >= :heure')
+            ->setParameter('user', $id)
+            ->setParameter('today', $today)
+            ->setParameter('heure', $heure)
+            ->getQuery();
+
+        $participation = $qb->getOneOrNullResult();
+
+        if (!$participation) {
+            return $this->json(['message' => 'Aucun cours trouvé pour cet apprenant à cette heure.']);
+        }
+
+        $cours = $participation->getCours();
+
+        return $this->json([
+            'id' => $cours->getId(),
+            'intitule' => $cours->getMatiere()?->getType(),
+            'formateur' => $cours->getFormateur()?->getPrenom() . ' ' . $cours->getFormateur()?->getNom(),
+            'groupe' => $cours->getGroupe()?->getType(),
+            'date' => $cours->getCrenaux()?->getDate()->format('Y-m-d'),
+            'horaire' => $cours->getCrenaux()?->getHeureDebut()->format('H:i') . ' - ' . $cours->getCrenaux()?->getHeureFin()->format('H:i'),
+        ]);
+    }
+
+
 }
