@@ -294,4 +294,65 @@ class ApiController extends AbstractController
         }
     }
 
+    #[Route('/user/{id}', name: 'api_user_profile', methods: ['GET'])]
+    public function getUserProfile(
+        int $id,
+        UserRepository $userRepo
+    ): JsonResponse {
+        $user = $userRepo->find($id);
+
+        if (!$user) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Utilisateur non trouvé'
+            ], 404);
+        }
+
+        return $this->json([
+            'success' => true,
+            'id' => $user->getId(),
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
+            'updated_at' => $user->getUpdatedAt()?->format('Y-m-d H:i:s'),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
+    #[Route('/user/{id}/upload-avatar', name: 'upload_avatar', methods: ['POST'])]
+    public function uploadAvatar(
+        Request $request,
+        UserRepository $userRepo,
+        EntityManagerInterface $em, 
+        int $id
+    ): JsonResponse {
+        try {
+            $user = $userRepo->find($id);
+            if (!$user) {
+                return $this->json(['success' => false, 'message' => 'Utilisateur non trouvé'], 404);
+            }
+
+            $file = $request->files->get('avatar');
+            if (!$file) {
+                return $this->json(['success' => false, 'message' => 'Aucun fichier reçu'], 400);
+            }
+
+            $filename = uniqid('avatar_') . '.' . $file->guessExtension();
+            $file->move($this->getParameter('avatars_directory'), $filename);
+
+            $user->setAvatar($filename);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->json(['success' => true, 'message' => 'Avatar mis à jour']);
+        } catch (\Throwable $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Erreur serveur : ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
 }
