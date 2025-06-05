@@ -69,9 +69,5 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
             $event->setResponse($response);
         
     }
-        
-    
-    
-
 }
 
