@@ -2,7 +2,7 @@
 
 	{#<link rel="stylesheet" href="{{ asset('css/menu.css') }}">#}
 
-	<nav id="menu" class="w-full flex px-8 py-1 gap-10 items-center bg-lightest  rounded-lg">
+	<nav id="menu" class="fixed top-0 left-0 z-50 w-full flex px-8 py-1 gap-10 items-center bg-white shadow-md">
 		<img id="logo" src="{{ asset('images/gefor_vect2.png') }}" alt="logo-gefor" class="w-40 object-contain transform-gpu will-change-transform text-2xl p-2 transition-all duration-300 ease-in-out hover:scale-105">
 		<ul id="menu-list" class="flex items-center gap-4 justify-around grow">
 
@@ -19,17 +19,17 @@
 					Accueil</a>
 			</li>
 			{# <li class="menu-item-2 main flex justify-center items-center">
-				<a href="{{ path('app_emargement') }}" class="transform-gpu will-change-transform text-xl p-2 transition-all  duration-300 ease-in-out transition-all text-[#273273] hover:text-[#F24C27] hover:scale-105">
+				<a href="{{ path('app_emargement') }}" class="transform-gpu will-change-transform text-xl p-2  duration-300 ease-in-out transition-all text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-file-signature"></i>
 					Emargement</a>
 			</li> #}
 			<li class="menu-item-3 main flex justify-center items-center">
-				<a href="page3.php" class=" transform-gpu will-change-transform text-xl p-2 transition-all transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
+				<a href="page3.php" class=" transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-phone"></i>
 					Contacter</a>
 			</li>
 			<li class="menu-item-3 main flex justify-center items-center">
-				<a href="{{ logout_path(key = null) }}" class=" transform-gpu will-change-transform text-xl p-2 transition-all transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
+				<a href="{{ logout_path(key = null) }}" class=" transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-right-from-bracket"></i>
 
 					Déconnexion</a>
