@@ -63,13 +63,18 @@ final class EmargementApprenantController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Signature enregistrée avec succès !');
-            return $this->redirectToRoute('app_emargement', ['id' => $id]);
+            //return $this->redirectToRoute('app_emargement', ['id' => $id]);
+            return $this->redirectToRoute(' app_intervenant_validation_emargement', ['id' => $id]);
+           
         }
 
-        // Affiche la page avec infos du cours et signature si existante
+        //Affiche la page avec infos du cours et signature si existante
         return $this->render('apprenant/emargement.html.twig', [
-            'cours' => $cours,
-            'signature' => $participation?->getSignature()
+          'cours' => $cours,
+          'signature' => $participation?->getSignature()
         ]);
+        
+
+
     }
 }

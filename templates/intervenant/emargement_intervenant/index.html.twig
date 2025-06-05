@@ -10,20 +10,20 @@
     <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273] p-2">
         <div class="w-full max-w-screen-xl mt-12 px-5">
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
-                <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Signature de présence</h2>
+                <h2 style="font-family: 'Roboto'" class="text-2xl font-semibold mb-4 text-[#273273]">Signature de présence</h2>
 
                 {# Si une signature existe en base64, on affiche le message + l'image #}
                 {% if signature %}
                     <p class="text-green-700 font-medium mb-4">Vous avez déjà signé ce cours.</p>
                     <img src="{{ signature }}" alt="Signature" class="mx-auto border border-gray-300 rounded-lg shadow-md w-96">
-
+                   <a data-turbo="false" href="{{ path(name = 'app_intervenant_validation_emargement', parameters = {id:cours.id}) }}"><button style="font-family: 'Roboto'"  class="bg-[#F24C27] transform-gpu cursor-pointer will-change-transform disabled: transition-all duration-300 ease-in-out hover:scale-105 font-medium rounded-lg p-3 mt-5 text-[#F2F2F2]">Validation apprenants</button></a>
                 {# Sinon, on affiche le canvas et le formulaire pour signer #}
                 {% else %}
                     <p class="mb-3 text-sm text-gray-600">Signez dans la zone ci-dessous puis validez :</p>
 
                     <form method="post">
                         <canvas id="signature-pad" width="400" height="200" class="border-2 border-orange-600 rounded-lg mx-auto mb-4"></canvas>
-
+                        
                         {# Ce champ caché stockera la signature (en base64) avant envoi #}
                         <input type="hidden" name="signature" id="signature">
 
