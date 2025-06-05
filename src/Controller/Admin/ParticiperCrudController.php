@@ -2,29 +2,27 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Cours;
+use App\Entity\Participer;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CoursCrudController extends AbstractCrudController
+class ParticiperCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Cours::class;
+        return Participer::class;
     }
 
-    
+    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('groupe_id'),
-            IdField::new('matiere_id'),
-            IdField::new('crenaux_id'),
-            IdField::new('formateur_id'),
-            TextField::new('commentaire'),
+            IdField::new('id'),
+            TextField::new('title'),
+            TextEditorField::new('description'),
         ];
     }
-    
+    */
 }
