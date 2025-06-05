@@ -27,13 +27,15 @@ final class PlanningApprenantController extends AbstractController
         $coursArray = array_map(function($participation) {
             $cours = $participation->getCours();
             $creneau = $cours->getCrenaux();
-
+            $formateur = $cours->getFormateur();
             $start = new \DateTime($creneau->getDate()->format('Y-m-d') . ' ' . $creneau->getHeureDebut()->format('H:i:s'));
             $end = new \DateTime($creneau->getDate()->format('Y-m-d') . ' ' . $creneau->getHeureFin()->format('H:i:s'));
 
             return [
                 'id' => $cours->getId(),
-                'title' => $cours->getMatiere()->getType(),
+                'matiere' => $cours->getMatiere()?->getType(),
+                'salle' => $creneau->getSalle(),
+                'formateur' => $formateur ? $formateur->getPrenom() . ' ' . $formateur->getNom() : 'N/A',
                 'start' => $start->format('Y-m-d\TH:i:s'),
                 'end' => $end->format('Y-m-d\TH:i:s'),
             ];
