@@ -12,6 +12,15 @@
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
                 <h2 class="text-2xl font-semibold mb-4 text-[#273273]">Signature de présence</h2>
 
+                <div class="text-left text-sm text-gray-700 bg-gray-100 p-4 rounded-md shadow mb-5">
+                    <p><strong>Matière :</strong> {{ cours.matiere.type }}</p>
+                    <p><strong>Date :</strong> {{ cours.crenaux.date|date('d/m/Y') }}</p>
+                    <p><strong>Heure :</strong> {{ cours.crenaux.heureDebut|date('H:i') }} - {{ cours.crenaux.heureFin|date('H:i') }}</p>
+                    <p><strong>Salle :</strong> {{ cours.crenaux.salle }}</p>
+                    <p><strong>Formateur :</strong> {{ cours.formateur.prenom }} {{ cours.formateur.nom }}</p>
+                </div>
+
+
                 {# Si une signature existe en base64, on affiche le message + l'image #}
                 {% if signature %}
                     <p class="text-green-700 font-medium mb-4">Vous avez déjà signé ce cours.</p>
