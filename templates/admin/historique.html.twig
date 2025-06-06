@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique d'émargement{% endblock %}
+
+{% block body %}
+    <h1>Historique d'un élève</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.eleve) }}
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    {% if emargements is not empty %}
+        <h2>Résultats</h2>
+        <table border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Cours</th>
+                    <th>Date</th>
+                    <th>Présence</th>
+                    <th>Retard</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in emargements %}
+                    <tr>
+                        <td>{{ e.cours.commentaire }}</td>
+                        <td>{{ e.dateValidation ? e.dateValidation|date('d/m/Y H:i') : 'Non validé' }}</td>
+                        <td>{{ e.validation ? '✔️' : '❌' }}</td>
+                        <td>{{ e.retard }} min</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elseif formSubmitted %}
+        <p>Aucune participation trouvée pour cet élève.</p>
+    {% endif %}
+{% endblock %}

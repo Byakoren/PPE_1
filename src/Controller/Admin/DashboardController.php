@@ -55,7 +55,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Matiere', 'fa fa-book-open', Matiere::class);
         yield MenuItem::linkToCrud('Crenaux', 'fa fa-calendar-days', Crenaux::class);
         yield MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Cours::class);
-        yield MenuItem::linkToCrud('Historique', 'fa fa-history', Participer::class);
+        yield MenuItem::linkToRoute('Historique', 'fa fa-history', 'admin_historique');
     
     }
 }
