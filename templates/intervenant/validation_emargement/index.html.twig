@@ -15,19 +15,44 @@
         <div class="w-full max-w-screen-xl mt-12 px-5">
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
                 {#<h2 class="text-2xl font-semibold mb-4 text-[#273273]">Bonjour {{app.user.prenom}} <img class="w-10 inline" src="{{ asset("images/hand-waving-hand.gif") }}" alt="wavinghandgif"></h2>#}
-                <ul class="space-y-2 mt-4 mb-6" id="liste-Apprenant-Validation" style="list-style: none; padding: 0;">
-                {% for apprenants in liste_apprenants %}
-                        <li>
-                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-black p-4 mb-4 rounded">
-                           <p> {{ apprenants.nom ~ " " ~ apprenants.prenom ~ " " ~ ((apprenants.validation == "Non validé") ? "❌ Non validé" : "✅ Validé") ~ " " ~ ((apprenants.signature == "Non signé") ? "❌ Non signé" : "✅ signé")  }}</p>
-                        </div>
-                        </li>
+                <table class="" id="liste-Apprenant-Validation" >
+                    <caption>
+                        Liste des apprenants du cours {{cours.commentaire}}
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Validation</th>
+                        <th scope="col">Signature</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <!--<li class="odd:bg-gray-100 even:bg-white p-2">-->
+                        {% for apprenants in liste_apprenants %}
+                        <tr>
+                        <th scope="row">{{ apprenants.nom }}</th>
+                        <td>{{apprenants.prenom}}</td>
+                        <td>{{((apprenants.validation == "Non validé") ? "❌ Non validé" : "✅ Validé")}}</td>
+                        <td>{{((apprenants.signature == "Non signé") ? "❌ Non signé" : "✅ signé")}}</td>
+                        </tr>
                         
-                {% endfor %}
-                </ul>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     
-        
+  <!--{% for apprenants in liste_apprenants %}
+                            <tr>
+                                <th scope="row"></th>    
+                                <p> {{ apprenants.nom ~ " " ~ apprenants.prenom ~ " " ~ ((apprenants.validation == "Non validé") ? "❌ Non validé" : "✅ Validé") ~ " " ~ ((apprenants.signature == "Non signé") ? "❌ Non signé" : "✅ signé")  }}</p>
+                                
+                                
+                            </tr>    
+                        {% endfor %}-->      
 {% endblock %}
+
