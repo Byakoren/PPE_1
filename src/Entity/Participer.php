@@ -32,6 +32,9 @@ class Participer
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $retard = 0;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Participer
     public function setRetard(int $retard): static
     {
         $this->retard = $retard;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): static
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }

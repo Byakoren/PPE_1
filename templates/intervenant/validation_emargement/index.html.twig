@@ -15,33 +15,39 @@
         <div class="w-full max-w-screen-xl mt-12 px-5">
             <div class="w-full max-w-[850px] bg-white p-5 rounded-xl shadow-lg text-center mx-auto">
                 {#<h2 class="text-2xl font-semibold mb-4 text-[#273273]">Bonjour {{app.user.prenom}} <img class="w-10 inline" src="{{ asset("images/hand-waving-hand.gif") }}" alt="wavinghandgif"></h2>#}
-                <table class="" id="liste-Apprenant-Validation" >
-                    <caption>
-                        Liste des apprenants du cours {{cours.commentaire}}
-                    </caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Prénom</th>
-                        <th scope="col">Validation</th>
-                        <th scope="col">Signature</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <!--<li class="odd:bg-gray-100 even:bg-white p-2">-->
-                        {% for apprenants in liste_apprenants %}
-                        <tr>
-                        <th scope="row">{{ apprenants.nom }}</th>
-                        <td>{{apprenants.prenom}}</td>
-                        <td>{{((apprenants.validation == "Non validé") ? "❌ Non validé" : "✅ Validé")}}</td>
-                        <td>{{((apprenants.signature == "Non signé") ? "❌ Non signé" : "✅ signé")}}</td>
-                        </tr>
-                        
-                        {% endfor %}
-                        
-                    </tbody>
-                </table>
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold mb-4 text-[#273273]">
+                        Liste des apprenants du cours {{ cours.commentaire }}
+                    </h3>
+                    {% for apprenants in liste_apprenants %}
+                        <div class="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-lg p-4 shadow mb-2">
+                            <div class="flex-1 text-left">
+                                <span class="font-bold">{{ apprenants.nom }} {{ apprenants.prenom }}</span>
+                            </div>
+                            <div class="flex items-center space-x-4 mt-2 md:mt-0">
+                                <span class="px-2 py-1 rounded {{ apprenants.validation == 'Non validé' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800' }}">
+                                    {{ apprenants.validation == "Non validé" ? "❌ Non validé" : "✅ Validé" }}
+                                </span>
+                                <span class="px-2 py-1 rounded {{ apprenants.signature == 'Non signé' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800' }}">
+                                    {{ apprenants.signature == "Non signé" ? "❌ Non signé" : "✅ signé" }}
+                                </span>
+                                {% if apprenants.signature == "Signé" %}
+                                    <span class="px-2 py-1 rounded bg-green-200 text-green-800">
+                                        Pas de retard
+                                    </span>
+                                {% else %}
+                                    <span class="text-red-600 font-semibold">{{ apprenants.retard }} minutes de retard</span>
+                                {% endif %}
+                                <textarea name="commentaire" rows="2" class="border rounded p-2 w-48" placeholder="Laisser un commentaire...">{{apprenants.commentaire}}</textarea>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>Aucun apprenant à afficher.</p>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="mt-6 px-6 py-2 bg-[#273273] text-white rounded-lg shadow hover:bg-[#1b2a59] transition">
+                    Valider
+                </button>
             </div>
         </div>
     </div>

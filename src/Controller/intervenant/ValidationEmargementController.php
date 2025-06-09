@@ -3,6 +3,7 @@
 namespace App\Controller\intervenant;
 use App\Repository\UserRepository;
 use App\Repository\CoursRepository;
+use App\Repository\CrenauxRepository;
 use App\Repository\ParticiperRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -20,32 +21,48 @@ final class ValidationEmargementController extends AbstractController
         EntityManagerInterface $em,
         Security $secutiy,
         UserRepository $userRepository,
-        Security $security
+        Security $security,
+        CrenauxRepository $crenaux_rep
     ): Response
     {
         $user = $security->getUser();
         $user_id = $user->getid();
         $cour = $coursRepository->find($id);
         $cour_id = $cour->getId();
-       
+        $id_crenaux = $cour->getCrenaux();
+        $crenaux = $crenaux_rep->findOneBy(["id" => $id_crenaux]);
+        $heureActuelle = new \DateTime();
+        
+
+        $heureDebut = $crenaux ? $crenaux->getHeureDebut() : null;
+        $temp_retard = null;
+        if ($heureDebut instanceof \DateTimeInterface) {
+            $interval = $heureDebut->diff($heureActuelle);
+            $temp_retard = ($heureActuelle > $heureDebut) ? ($interval->h * 60 + $interval->i) : 0;
+        }
+
         // Récupérer toutes les participations pour ce cours
         $liste_apprenants = $particierRepository->findBy(['cours' => $cour]);
-
+        
         // Préparer une liste structurée pour la vue
         $apprenants = [];
         foreach ($liste_apprenants as $participation) {
+            
             $user = $participation->getUser();
             $apprenants[] = [
             'nom' => $user->getNom(),
             'prenom' => $user->getPrenom(),
             'signature' => $participation->getSignature() ? 'Signé' : 'Non signé',
             'validation' => $participation->isValidation() ? 'Validé' : 'Non validé',
-            ];
+            'retard' => $temp_retard,
+            'commentaire' => $participation->getCommentaire()];
+            
         }
 
         $liste_apprenants = $apprenants;
        
         dump($liste_apprenants);
+        dump($temp_retard);
 
         return $this->render('intervenant/validation_emargement/index.html.twig', [
             'controller_name' => 'Intervenant/ValidationEmargementController',
