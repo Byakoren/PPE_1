@@ -45,12 +45,15 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/planning, roles: ROLE_APPRENANT }
-        - { path: ^/emargement, roles: ROLE_APPRENANT }
+    # Modifications du 2024-06-08 :
+    # - Ajout de l'accès au contrôleur de l'apprenant pour le rôle intervenant afin d'utiliser des contrôleurs uniques pour les rôles apprenant et intervenant
+        #Ajout role intervenant->:
+        - { path: ^/planning, roles: [ROLE_APPRENANT, ROLE_INTERVENANT] }
+         #Ajout role intervenant->:
+        - { path: ^/emargement, roles: [ROLE_APPRENANT, ROLE_INTERVENANT] }
+        #API:
         - { path: ^/api/login, roles: PUBLIC_ACCESS, methods: [POST] }
-        - { path: ^/planning, roles: ROLE_APPRENANT }
-        - { path: ^/emargement, roles: ROLE_APPRENANT }
-        - { path: ^/intervenant, roles: ROLE_INTERVENANT }
+        #Admin:
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         
