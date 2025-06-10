@@ -7,6 +7,7 @@ use App\Repository\CrenauxRepository;
 use App\Repository\ParticiperRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,19 +56,50 @@ final class ValidationEmargementController extends AbstractController
             'signature' => $participation->getSignature() ? 'Signé' : 'Non signé',
             'validation' => $participation->isValidation() ? 'Validé' : 'Non validé',
             'retard' => $temp_retard,
-            'commentaire' => $participation->getCommentaire()];
+            'id' => $participation->getId()];
+            //Pour ajouter des commentaires pars validation et par apprenants.
+            //'commentaire' => $participation->getCommentaire()];
+            
             
         }
 
         $liste_apprenants = $apprenants;
-       
-        dump($liste_apprenants);
-        dump($temp_retard);
-
+        dump($participation->isValidation() ? 'Validé' : 'Non validé');
         return $this->render('intervenant/validation_emargement/index.html.twig', [
             'controller_name' => 'Intervenant/ValidationEmargementController',
             'liste_apprenants' => $liste_apprenants,
             'cours' => $cour,
         ]);
     }
+
+    //Création d'une route pour la validation des signatures
+    #[Route("/intervenant/validation/emargement/valider/{id}", name: "valider_signature", methods: ["POST"])]
+    public function validerSignature(
+        int $id,
+        ParticiperRepository $participerRepository,
+        EntityManagerInterface $em,
+        Request $request
+    ): Response {
+        //Attribut la participation via un find avec l'id de la participation
+        $participation = $participerRepository->find($id);
+
+        //Si aucune vérification n'est retourné par le repository alors lève une érreur que l'on intercepte
+        if(!$participation){
+            throw $this->createNotFoundException("Participation non trouvé");
+        }
+        //Vérifie le jeteon de session avec la méthode isCsrfTokenValid, is true set la validation true et flush
+        //Transmet un message flash(optionnel, débugage)
+        if ($this->isCsrfTokenValid('valider_signature' . $id, $request->request->get("_token"))) {
+            $participation->setValidation(true);
+            $em->flush();
+            $this->addFlash("success", "signature validée!");
+
+        }
+
+        return $this->redirectToRoute("app_intervenant_validation_emargement",[
+            "id" => $participation->getCours()->getId()
+        ]);
+
+    }
+
 }

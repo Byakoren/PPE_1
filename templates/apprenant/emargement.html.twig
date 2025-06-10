@@ -25,7 +25,9 @@
                 {% if signature %}
                     <p class="text-green-700 font-medium mb-4">Vous avez déjà signé ce cours.</p>
                     <img src="{{ signature }}" alt="Signature" class="mx-auto border border-gray-300 rounded-lg shadow-md w-96">
-
+                    {% if 'ROLE_INTERVENANT' in app.user.roles  %}
+                        <a data-turbo="false" href="{{ path(name = 'app_intervenant_validation_emargement', parameters = {id:cours.id}) }}"><button style="font-family: 'Roboto'"  class="bg-[#F24C27] transform-gpu cursor-pointer will-change-transform disabled: transition-all duration-300 ease-in-out hover:scale-105 font-medium rounded-lg p-3 mt-5 text-[#F2F2F2]">Validation apprenants</button></a>
+                    {% endif %}
                 {# Sinon, on affiche le canvas et le formulaire pour signer #}
                 {% else %}
                     <p class="mb-3 text-sm text-gray-600">Signez dans la zone ci-dessous puis validez :</p>

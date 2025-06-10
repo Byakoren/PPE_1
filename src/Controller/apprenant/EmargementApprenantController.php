@@ -63,8 +63,9 @@ final class EmargementApprenantController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Signature enregistrée avec succès !');
+            
             //return $this->redirectToRoute('app_emargement', ['id' => $id]);
-            return $this->redirectToRoute(' app_intervenant_validation_emargement', ['id' => $id]);
+            return $this->redirectToRoute('app_intervenant_validation_emargement', ['id' => $id]);
            
         }
 
