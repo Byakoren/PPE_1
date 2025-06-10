@@ -10,6 +10,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class EleveSelectionType extends AbstractType
 {
@@ -24,6 +26,18 @@ class EleveSelectionType extends AbstractType
                 },
 
                 'label' => 'Choisir un élève'
+            ])
+
+            ->add('dateDebut', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'Date de début'
+            ])
+
+            ->add('dateFin', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'Date de fin'
             ])
             
             ->add('submit', SubmitType::class, [
