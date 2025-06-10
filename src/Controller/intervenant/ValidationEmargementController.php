@@ -50,13 +50,29 @@ final class ValidationEmargementController extends AbstractController
         foreach ($liste_apprenants as $participation) {
             
             $user = $participation->getUser();
+            //Si l'apprenant a signé alors on affiche le retard en base de donnée.
+            // L'apprenant n'a pas signé le retard envoyé a la vue est celui calculé.
+            if ($participation->getSignature() === null) {
+                $retard = $temp_retard;
+            } else {
+                $retard = $participation->getRetard();
+            }
+
+            //calcule de l'heure de signature.
+            $heure_de_signature = null;
+            if ($heureDebut instanceof \DateTimeInterface && $retard !== null) {
+                $heure_de_signature = (clone $heureDebut)->modify("+{$retard} minutes");
+            }
+
             $apprenants[] = [
             'nom' => $user->getNom(),
             'prenom' => $user->getPrenom(),
             'signature' => $participation->getSignature() ? 'Signé' : 'Non signé',
             'validation' => $participation->isValidation() ? 'Validé' : 'Non validé',
-            'retard' => $temp_retard,
-            'id' => $participation->getId()];
+            'retard' => $retard,
+            'id' => $participation->getId(),
+            'heureSignature' => $heure_de_signature
+            ];
             //Pour ajouter des commentaires pars validation et par apprenants.
             //'commentaire' => $participation->getCommentaire()];
             
@@ -87,12 +103,13 @@ final class ValidationEmargementController extends AbstractController
         if(!$participation){
             throw $this->createNotFoundException("Participation non trouvé");
         }
-        //Vérifie le jeteon de session avec la méthode isCsrfTokenValid, is true set la validation true et flush
+
+        //Vérifie le jeteon de session avec la méthode isCsrfTokenValid, si jeton ok set la validation "true" et flush
         //Transmet un message flash(optionnel, débugage)
         if ($this->isCsrfTokenValid('valider_signature' . $id, $request->request->get("_token"))) {
             $participation->setValidation(true);
             $em->flush();
-            $this->addFlash("success", "signature validée!");
+            //$this->addFlash("success", "signature validée!");
 
         }
 

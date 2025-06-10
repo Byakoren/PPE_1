@@ -46,7 +46,10 @@
                                     {% endif %}
                                     {#Signé?#}
                                     <span class="px-2 py-1 rounded {{ apprenants.signature == 'Non signé' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800' }}">
-                                        {{ apprenants.signature == "Non signé" ? "❌ Non signé" : "✅ signé" }}
+                                        {{ apprenants.signature == "Non signé" ? "❌ Non signé" : "✅ signé à " }}
+                                        {# ternaire; si apprenants.heureSignature est NULL n'affiche rien(d'ou la chaine vide '') sinon affiche
+                                        l'heure. le |date("H:i") est un filtre qui permet de formater la valeur renvoyé sous forme de date en string.#}
+                                        {{ apprenants.heureSignature ? apprenants.heureSignature|date('H:i') : '' }}
                                     </span>
                                 {#Si l'apprenant a plus de 15 min de retard et n'a pas signé: afficher Absent.#}
                                 {% elseif apprenants.retard > 15 and apprenants.signature == 'Non signé'  %}
@@ -60,7 +63,7 @@
                                     </span>
                                 {% endif %}
                                 {#Si l'apprenant a signé: affiche Pas de retard.#}
-                                {% if apprenants.signature == "Signé" %}
+                                {% if apprenants.signature == "Signé" and apprenants.retard == 0 %}
                                     <span class="px-2 py-1 rounded bg-green-200 text-green-800">
                                         Pas de retard
                                     </span>
