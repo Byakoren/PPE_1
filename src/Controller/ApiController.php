@@ -137,7 +137,6 @@ class ApiController extends AbstractController
             'cours' => $cours
         ]);
 
-        // ✅ Vérifie si une signature est déjà enregistrée
         if ($participation && $participation->getSignature()) {
             return $this->json([
                 'success' => false,
@@ -149,6 +148,8 @@ class ApiController extends AbstractController
             $participation = new Participer();
             $participation->setUser($user);
             $participation->setCours($cours);
+            $participation->setValidation(false); 
+            $participation->setRetard(0); 
         }
 
         $participation->setSignature($signature);
@@ -248,6 +249,109 @@ class ApiController extends AbstractController
             'date' => $cours->getCrenaux()?->getDate()->format('Y-m-d'),
             'horaire' => $cours->getCrenaux()?->getHeureDebut()->format('H:i') . ' - ' . $cours->getCrenaux()?->getHeureFin()->format('H:i'),
         ]);
+    }
+
+    #[Route('/presence/valider', name: 'valider_presence', methods: ['POST'])]
+    public function validerPresence(
+        Request $request,
+        UserRepository $userRepo,
+        CoursRepository $coursRepo,
+        ParticiperRepository $participerRepo,
+        EntityManagerInterface $em
+    ): JsonResponse {
+        try {
+            $data = json_decode($request->getContent(), true);
+            $user = $userRepo->find($data['idUser']);
+            $cours = $coursRepo->find($data['idCours']);
+            $retard = $data['retard'] ?? 0;
+
+            if (!$user || !$cours) {
+                return $this->json(['success' => false, 'message' => 'Données invalides'], 400);
+            }
+
+            $participation = $participerRepo->findOneBy([
+                'user' => $user,
+                'cours' => $cours
+            ]);
+
+            if (!$participation) {
+                return $this->json(['success' => false, 'message' => 'Participation non trouvée'], 404);
+            }
+
+            $participation->setValidation(true);
+            $participation->setDateValidation(new \DateTime());
+            $participation->setRetard((int) $retard);
+
+            $em->persist($participation);
+            $em->flush();
+
+            return $this->json(['success' => true, 'message' => 'Présence validée']);
+        } catch (\Throwable $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Erreur serveur : ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    #[Route('/user/{id}', name: 'api_user_profile', methods: ['GET'])]
+    public function getUserProfile(
+        int $id,
+        UserRepository $userRepo
+    ): JsonResponse {
+        $user = $userRepo->find($id);
+
+        if (!$user) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Utilisateur non trouvé'
+            ], 404);
+        }
+
+        return $this->json([
+            'success' => true,
+            'id' => $user->getId(),
+            'prenom' => $user->getPrenom(),
+            'nom' => $user->getNom(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
+            'updated_at' => $user->getUpdatedAt()?->format('Y-m-d H:i:s'),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
+    #[Route('/user/{id}/upload-avatar', name: 'upload_avatar', methods: ['POST'])]
+    public function uploadAvatar(
+        Request $request,
+        UserRepository $userRepo,
+        EntityManagerInterface $em, 
+        int $id
+    ): JsonResponse {
+        try {
+            $user = $userRepo->find($id);
+            if (!$user) {
+                return $this->json(['success' => false, 'message' => 'Utilisateur non trouvé'], 404);
+            }
+
+            $file = $request->files->get('avatar');
+            if (!$file) {
+                return $this->json(['success' => false, 'message' => 'Aucun fichier reçu'], 400);
+            }
+
+            $filename = uniqid('avatar_') . '.' . $file->guessExtension();
+            $file->move($this->getParameter('avatars_directory'), $filename);
+
+            $user->setAvatar($filename);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->json(['success' => true, 'message' => 'Avatar mis à jour']);
+        } catch (\Throwable $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Erreur serveur : ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 
