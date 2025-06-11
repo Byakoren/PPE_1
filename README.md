@@ -109,3 +109,37 @@ php bin/console cache:warmup
 
 Il est recommandé d’exécuter ces commandes après toute modification importante de la configuration ou lors du déploiement.
 
+## 📝 Note sur l'envoi du lien de changement de mot de passe à l'inscription
+
+Lorsqu'un nouvel utilisateur s'inscrit, un lien de changement de mot de passe lui est envoyé par email. Pour que cette fonctionnalité fonctionne correctement, il est nécessaire de configurer l'envoi des emails dans votre projet Symfony.
+
+### Configuration du .env
+
+Dans le fichier `.env`, renseignez la variable `MAILER_DSN` avec les informations de connexion à votre serveur SMTP ou service d'envoi d'emails. Exemple :
+
+```env
+MAILER_DSN=smtp://utilisateur:motdepasse@smtp.exemple.com:587
+```
+
+Adaptez cette valeur selon votre fournisseur de service email.
+
+### Gestion de l'envoi des emails
+
+Par défaut, Symfony utilise le mode asynchrone pour l'envoi des emails (messages placés en file d'attente/queue). Pour que les emails soient effectivement envoyés, vous devez lancer le worker Messenger :
+
+```bash
+php bin/console messenger:consume async
+```
+
+Si vous préférez un envoi immédiat (mode synchrone), modifiez la configuration dans `config/packages/messenger.yaml` :
+
+```yaml
+framework:
+    messenger:
+        routing:
+            'Symfony\Component\Mailer\Messenger\SendEmailMessage': sync
+```
+
+> **Remarque :** Le mode asynchrone est recommandé en production pour de meilleures performances, mais le mode synchrone peut être utile en développement ou pour des tests rapides.
+
+Pour plus d'informations, consultez la [documentation officielle de Symfony Mailer](https://symfony.com/doc/current/mailer.html).
