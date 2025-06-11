@@ -3,6 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Cours;
+use App\Entity\Groupe;
+use App\Entity\Crenaux;
+use App\Entity\Matiere;
+use App\Entity\Participer;
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -47,7 +51,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Utilisateurs', 'fa fa-user');
-        yield MenuItem::linkToCrud('Cours', 'fa fa-book', Cours::class);
+        yield MenuItem::linkToCrud('Groupe', 'fa fa-people-group', Groupe::class);
+        yield MenuItem::linkToCrud('Matiere', 'fa fa-book-open', Matiere::class);
+        yield MenuItem::linkToCrud('Crenaux', 'fa fa-calendar-days', Crenaux::class);
+        yield MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Cours::class);
+        yield MenuItem::linkToRoute('Historique', 'fa fa-history', 'admin_historique');
     
     }
 }

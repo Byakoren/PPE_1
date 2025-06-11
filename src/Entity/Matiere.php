@@ -75,4 +75,9 @@ class Matiere
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->type ?? 'Matiere';
+    }
 }

@@ -121,4 +121,15 @@ class Crenaux
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            '%s | %s-%s | Salle : %s',
+            $this->date->format('d/m/Y'),
+            $this->heure_debut->format('H:i'),
+            $this->heure_fin->format('H:i'),
+            $this->salle
+        );
+    }
 }

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/historique.css') }}">
+{% endblock %}
+
+
+{% block title %}Historique d'émargement{% endblock %}
+
+{% block body %}
+    <h1>Séléctionez un élève</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.eleve) }}
+        {{ form_row(form.dateDebut) }}
+        {{ form_row(form.dateFin) }}
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    {% if emargements is not empty %}
+        <h2>Résultats</h2>
+        <table id="presence-table" border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Cours</th>
+                    <th>Date</th>
+                    <th>Présence</th>
+                    <th>Retard</th>
+                    <th>Signature</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in emargements %}
+                    <tr>
+                        <td>{{ e.cours.commentaire }}</td>
+                        <td>{{ e.dateValidation ? e.dateValidation|date('d/m/Y H:i') : 'Non validé' }}</td>
+                        <td>{{ e.validation ? 'Présent(e)' : 'Absent(e)' }}</td>
+                        <td>{{ e.retard }} min</td>
+                        <td>
+                            {% if e.signature %}
+                                <img src="{{ e.signature }}" alt="Signature" style="height: 50px;">
+                            {% else %}
+                                <em>Non signée</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elseif formSubmitted %}
+        <p>Aucune participation trouvée pour cet élève.</p>
+    {% endif %}
+    <button onclick="window.print()">Imprimer</button>
+{% endblock %}
