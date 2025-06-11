@@ -20,6 +20,9 @@
         "@fullcalendar/core": "^6.1.17",
         "@fullcalendar/daygrid": "^6.1.8",
         "@fullcalendar/interaction": "^6.1.17",
-        "@fullcalendar/timegrid": "^6.1.8"
+        "@fullcalendar/timegrid": "^6.1.8",
+        "@symfony/stimulus-bridge": "^4.0.1",
+        "@symfony/ux-turbo": "^2.25.2",
+        "stimulus": "^3.2.2"
     }
 }

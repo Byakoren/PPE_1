@@ -55,7 +55,10 @@ security:
         - { path: ^/api/login, roles: PUBLIC_ACCESS, methods: [POST] }
         #Admin:
         - { path: ^/admin, roles: ROLE_ADMIN }
-
+        
+        # Modifications du 2024-06-10 :
+        # Validation signature:
+        - { path: ^/intervenant/validation/, roles: ROLE_INTERVENANT }
         
 
         # - { path: ^/admin, roles: ROLE_ADMIN }

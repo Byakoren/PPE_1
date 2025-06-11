@@ -7,10 +7,9 @@
 		<ul id="menu-list" class="flex items-center gap-4 justify-around grow">
 
 			<li class="main flex justify-center items-center">
-				{% if  'ROLE_ADMIN' in app.user.roles %} 
+				{% if 'ROLE_ADMIN' in app.user.roles %} 
 					<a href="{{ path('app_admin_dashboard') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
-				{% elseif 'ROLE_INTERVENANT' in app.user.roles  %} 
-					<a href="{{ path('app_planning_intervenant') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
+				
 				{% else  %} 
 					<a href="{{ path('app_planning_apprenant') }}" class=" text-[#273273]  transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-0 hover:text-[#F24C27] hover:scale-105">
 				{% endif %}
@@ -22,12 +21,14 @@
 				<a href="{{ path('app_emargement') }}" class="transform-gpu will-change-transform text-xl p-2  duration-300 ease-in-out transition-all text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-file-signature"></i>
 					Emargement</a>
-			</li> #}
+			</li> 
 			<li class="menu-item-3 main flex justify-center items-center">
 				<a href="page3.php" class=" transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-phone"></i>
 					Contacter</a>
 			</li>
+			#}
+			
 			<li class="menu-item-3 main flex justify-center items-center">
 				<a href="{{ logout_path(key = null) }}" class=" transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out text-[#273273] hover:text-[#F24C27] hover:scale-105">
 					<i class="fa-solid fa-right-from-bracket"></i>
@@ -36,7 +37,7 @@
 			</li>
 			<div class="user-profile main flex justify-center items-center">
 				<a href="{{ path('profil_route') }}">
-					<img src="{{ asset('uploads/avatars/' ~ (app.user.avatar ?? 'default.jpg')) }}" alt="Profil" class=" transform-gpu will-change-transform w-16 h-16 rounded-full overflow-hidden shadow-[0px_4px_62px_-20px_#f97316] border-4 border-orange-500 object-cover transition duration-300 ease-in-out hover:shadow-[0px_4px_33px_-7px_rgba(59,_130,_246,_0.5)] hover:border-[#273273] hover:scale-105">
+					<img src="{{ asset('uploads/avatars/' ~ (app.user.avatar ?? 'photo_profil.png')) }}" alt="Profil" class=" transform-gpu will-change-transform w-16 h-16 rounded-full overflow-hidden shadow-[0px_4px_62px_-20px_#f97316] border-4 border-orange-500 object-cover transition duration-300 ease-in-out hover:shadow-[0px_4px_33px_-7px_rgba(59,_130,_246,_0.5)] hover:border-[#273273] hover:scale-105">
 				</a>
 			</div>
 			{# <li class="profil">
