@@ -91,8 +91,12 @@ final class EmargementApprenantController extends AbstractController
 
             $this->addFlash('success', 'Signature enregistrée avec succès !');
             
-            //return $this->redirectToRoute('app_emargement', ['id' => $id]);
-            return $this->redirectToRoute('app_intervenant_validation_emargement', ['id' => $id]);
+            //Redirige en fonction du role
+            if ($security->isGranted('ROLE_INTERVENANT')) {
+                return $this->redirectToRoute('app_intervenant_validation_emargement', ['id' => $id]);
+            } else {
+                return $this->redirectToRoute('app_emargement', ['id' => $id]);
+            }
            
         }
 
