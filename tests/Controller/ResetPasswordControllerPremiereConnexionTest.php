@@ -6,7 +6,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Uid\Uuid;
 
-class ResetPasswordControllerTest extends WebTestCase
+class ResetPasswordControllerPremiereConnexionTest extends WebTestCase
 {
     public function testResetPasswordPageAccessibleWithValidToken(): void
     {

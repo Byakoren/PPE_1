@@ -16,6 +16,6 @@ Permettre à un utilisateur de saisir un nouveau mot de passe via un formulaire 
 
 ## À savoir
 - Ce formulaire sera utilisé dans la page accessible depuis le lien envoyé par mail.
-- Le mot de passe saisi sera hashé dans le contrôleur `ResetPasswordController` avant d’être enregistré.
+- Le mot de passe saisi sera hashé dans le contrôleur `ResetPasswordControllerPremiereConnexion` avant d’être enregistré.
 
 
