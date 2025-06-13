@@ -86,6 +86,7 @@ final class EmargementApprenantController extends AbstractController
 
             // Enregistre la signature
             $participation->setSignature($signature);
+            $participation->setDateValidation($participation->getCours()->getCrenaux()->getDate());
             $em->persist($participation);
             $em->flush();
 
