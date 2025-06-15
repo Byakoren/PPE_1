@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions d'utilisation{% endblock %}
+
+{% block body %}
+    {% include 'auth/menu.html.twig' %}
+
+    <div class="flex-grow">
+        <div class="container mx-auto p-8 text-gray-700 leading-relaxed">
+            <h1 class="text-3xl font-bold text-[#273273] mb-6">Conditions d'utilisation</h1>
+
+            <p>
+                L'accès à cette plateforme est réservé aux apprenants, formateurs et personnels du Groupe Gefor disposant d’un compte personnel.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Règles d’utilisation</h2>
+            <ul class="list-disc list-inside">
+                <li>Ne pas communiquer ses identifiants à des tiers</li>
+                <li>Utiliser la plateforme dans un cadre strictement pédagogique</li>
+                <li>Signer personnellement les feuilles d’émargement</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Responsabilités</h2>
+            <p>
+                Toute tentative de fraude, d’usurpation d’identité ou d’altération des données peut entraîner une suspension d’accès et des poursuites disciplinaires.
+            </p>
+
+            <p class="mt-6">
+                En utilisant la plateforme, vous acceptez ces conditions. Pour toute question, merci de contacter l’administration via : <a href="mailto:contact@gefor.com" class="text-blue-600 underline">contact@gefor.com</a>
+            </p>
+        </div>
+    </div>
+    
+    {% include 'auth/footer.html.twig' %}
+{% endblock %}
