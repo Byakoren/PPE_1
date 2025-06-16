@@ -217,39 +217,52 @@ class ApiController extends AbstractController
         int $id,
         ParticiperRepository $participerRepo
     ): JsonResponse {
-        $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
-        $today = $now->format('Y-m-d');
-        $heure = $now->format('H:i:s');
+        try {
+            $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+            $today = $now->format('Y-m-d');
+            $heure = $now->format('H:i:s');
+    
+            $qb = $participerRepo->createQueryBuilder('p')
+                ->join('p.cours', 'c')
+                ->join('c.crenaux', 'cr')
+                ->addSelect('c', 'cr')
+                ->where('p.user = :user')
+                ->andWhere('cr.date = :today')
+                ->andWhere('cr.heure_debut <= :heure')
+                ->andWhere('cr.heure_fin >= :heure')
+                ->setParameter('user', $id)
+                ->setParameter('today', $today)
+                ->setParameter('heure', $heure)
+                ->getQuery();
+    
+            $participation = $qb->setMaxResults(1)->getOneOrNullResult();
 
-        $qb = $participerRepo->createQueryBuilder('p')
-            ->join('p.cours', 'c')
-            ->join('c.crenaux', 'cr')
-            ->where('p.user = :user')
-            ->andWhere('cr.date = :today')
-            ->andWhere('cr.heure_debut <= :heure')
-            ->andWhere('cr.heure_fin >= :heure')
-            ->setParameter('user', $id)
-            ->setParameter('today', $today)
-            ->setParameter('heure', $heure)
-            ->getQuery();
-
-        $participation = $qb->getOneOrNullResult();
-
-        if (!$participation) {
-            return $this->json(['message' => 'Aucun cours trouvé pour cet apprenant à cette heure.']);
+    
+            if (!$participation) {
+                return $this->json(['message' => 'Aucun cours trouvé pour cet apprenant à cette heure.']);
+            }
+    
+            $cours = $participation->getCours();
+            $crenau = $cours->getCrenaux();
+    
+            return $this->json([
+                'id' => $cours->getId(),
+                'intitule' => $cours->getMatiere()?->getType(),
+                'formateur' => $cours->getFormateur()?->getPrenom() . ' ' . $cours->getFormateur()?->getNom(),
+                'groupe' => $cours->getGroupe()?->getType(),
+                'date' => $crenau?->getDate()?->format('Y-m-d'),
+                'horaire' => $crenau?->getHeureDebut()?->format('H:i') . ' - ' . $crenau?->getHeureFin()?->format('H:i'),
+            ]);
+        } catch (\Throwable $e) {
+            return $this->json([
+                'error' => 'Erreur interne',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
         }
-
-        $cours = $participation->getCours();
-
-        return $this->json([
-            'id' => $cours->getId(),
-            'intitule' => $cours->getMatiere()?->getType(),
-            'formateur' => $cours->getFormateur()?->getPrenom() . ' ' . $cours->getFormateur()?->getNom(),
-            'groupe' => $cours->getGroupe()?->getType(),
-            'date' => $cours->getCrenaux()?->getDate()->format('Y-m-d'),
-            'horaire' => $cours->getCrenaux()?->getHeureDebut()->format('H:i') . ' - ' . $cours->getCrenaux()?->getHeureFin()->format('H:i'),
-        ]);
     }
+    
+    
 
     #[Route('/presence/valider', name: 'valider_presence', methods: ['POST'])]
     public function validerPresence(
