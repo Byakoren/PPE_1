@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller\intervenant;
+use DateTimeInterface;
 use App\Repository\UserRepository;
 use App\Repository\CoursRepository;
 use App\Repository\CrenauxRepository;
@@ -37,9 +38,11 @@ final class ValidationEmargementController extends AbstractController
 
         $heureDebut = $crenaux ? $crenaux->getHeureDebut() : null;
         $temp_retard = null;
-        if ($heureDebut instanceof \DateTimeInterface) {
+        if ($heureDebut instanceof DateTimeInterface) {
             $interval = $heureDebut->diff($heureActuelle);
             $temp_retard = ($heureActuelle > $heureDebut) ? ($interval->h * 60 + $interval->i) : 0;
+            dump($temp_retard); 
+            dump($heureDebut);
         }
 
         // Récupérer toutes les participations pour ce cours
@@ -60,7 +63,7 @@ final class ValidationEmargementController extends AbstractController
 
             //calcule de l'heure de signature.
             $heure_de_signature = null;
-            if ($heureDebut instanceof \DateTimeInterface && $retard !== null) {
+            if ($heureDebut instanceof DateTime && $retard !== null) {
                 $heure_de_signature = (clone $heureDebut)->modify("+{$retard} minutes");
             }
 
