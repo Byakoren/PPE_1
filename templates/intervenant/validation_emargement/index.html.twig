@@ -26,8 +26,13 @@
                             </div>
                             <div class="flex items-center space-x-4 mt-2 md:mt-0">
 
+                                
+              
+  
+
                                 {#Si l'apprenants a moins de 120 min de retard: affiche si il est validé et si il a signé.#}
                                 {% if apprenants.retard <= 120 %}
+
                                     {#Validé?#}
                                     <span class="px-2 py-1 rounded {{ apprenants.validation == 'Non validé' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800' }}">
                                         {{ apprenants.validation == "Non validé" ? "❌ Non validé" : "✅ Validé" }}

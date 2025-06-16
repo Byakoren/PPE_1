@@ -399,6 +399,8 @@ class ApiController extends AbstractController
             )
         ]
     )]
+
+    #[Route('/users/{id}/participations', name: 'user_participation_list', methods: ['GET'])]
     public function getParticipationsByUser(
             int $id,
             ParticiperRepository $participerRepository,
@@ -438,5 +440,53 @@ class ApiController extends AbstractController
             
             return $this->json($resultats);
         }
+
+
+    #[Route('/reset/check-email', name: 'check_email', methods: ['POST'])]
+
+    public function checkEmail(Request $request, UserRepository $userRepo): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
+
+        if (!$email) {
+            return $this->json(['success' => false, 'message' => 'Email manquant'], 400);
+        }
+
+        $user = $userRepo->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            return $this->json(['success' => false, 'message' => 'Email introuvable'], 404);
+        }
+
+        return $this->json(['success' => true, 'message' => 'Email valide']);
+    }
+
+    #[Route('/reset/change-password', name: 'change_password', methods: ['POST'])]
+
+    public function changePassword(Request $request, UserRepository $userRepo, EntityManagerInterface $em): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+
+        if (!$email || !$password) {
+            return $this->json(['success' => false, 'message' => 'Email ou mot de passe manquant'], 400);
+        }
+
+        $user = $userRepo->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            return $this->json(['success' => false, 'message' => 'Utilisateur non trouvé'], 404);
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $user->setPassword($hashedPassword);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['success' => true, 'message' => 'Mot de passe mis à jour avec succès']);
+    }
 
 }
