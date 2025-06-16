@@ -1,0 +1,16 @@
+<footer class="w-full bg-white text-center py-4 border-t border-gray-300">
+    <div class="flex flex-col md:flex-row justify-around items-center gap-4">
+
+        <a href="{{ path('app_conditions') }}" class="text-[#273273] transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out hover:text-[#F24C27] hover:scale-105">
+            Conditions d'utilisation
+        </a>
+
+        <a href="{{ path('app_confidentialite') }}" class="text-[#273273] transform-gpu will-change-transform text-xl p-2 transition-all duration-300 ease-in-out hover:text-[#F24C27] hover:scale-105">
+            Politique de confidentialité
+        </a>
+
+        <div class="text-[#273273] text-xl p-2">
+            &copy; {{ "now"|date("Y") }} Gefor. Tous droits réservés.
+        </div>
+    </div>
+</footer>

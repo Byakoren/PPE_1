@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de confidentialité{% endblock %}
+
+{% block body %}
+    {% include 'auth/menu.html.twig' %}
+
+    <div class="flex-grow">
+        <div class="container mx-auto p-8 text-gray-700 leading-relaxed">
+            <h1 class="text-3xl font-bold text-[#273273] mb-6">Politique de confidentialité</h1>
+
+            <p>
+                Le Groupe Gefor accorde une grande importance à la protection de vos données personnelles. Cette politique explique comment vos données sont collectées, utilisées et protégées dans le cadre de l’utilisation de notre plateforme d’émargement.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Données collectées</h2>
+            <ul class="list-disc list-inside">
+                <li>Nom, prénom</li>
+                <li>Adresse email</li>
+                <li>Signature numérique</li>
+                <li>Historique des présences, retards et validations</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Utilisation des données</h2>
+            <p>
+                Ces données sont utilisées uniquement pour assurer le bon fonctionnement pédagogique et administratif : suivi des présences, gestion des comptes utilisateurs, échanges avec les formateurs, etc.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Conservation et sécurité</h2>
+            <p>
+                Vos données sont stockées de manière sécurisée. Les mots de passe sont protégés par des procédés robustes. Seuls les personnels autorisés peuvent y accéder dans le cadre de leurs fonctions.
+            </p>
+
+            <h2 class="text-2xl font-semibold text-[#273273] mt-6 mb-2">Vos droits</h2>
+            <p>
+                Conformément à la réglementation en vigueur, vous disposez des droits suivants :
+            </p>
+            <ul class="list-disc list-inside">
+                <li>Droit d’accès et de rectification</li>
+                <li>Droit à l’effacement</li>
+                <li>Droit à la limitation du traitement</li>
+                <li>Droit d’opposition</li>
+                <li>Droit à la portabilité</li>
+            </ul>
+            <p>
+                Pour exercer ces droits, vous pouvez contacter : <a href="mailto:contact@gefor.com" class="text-blue-600 underline">contact@gefor.com</a>
+            </p>
+        </div>
+    </div>
+    
+    {% include 'auth/footer.html.twig' %}
+{% endblock %}

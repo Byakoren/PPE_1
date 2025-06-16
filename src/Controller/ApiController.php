@@ -353,8 +353,97 @@ class ApiController extends AbstractController
             ], 500);
         }
     }
+#Methode de récupération des participations par user.
+    #Création d'une route "/users/{id}/participations", get
+    #[Route('/users/{id}/participations', name: 'user_participation_list', methods: ['GET'])]
+    
+    #[OA\Get(
+        path: '/api/users/{id}/participations',
+        summary: "Récupère les participations d'un utilisateur",
+        description: "Retourne la liste des participations d'un utilisateur donné, incluant les informations sur le cours, la matière, les créneaux horaires, la validation, la signature et le retard.",
+        tags: ['Participations'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                description: "ID de l'utilisateur",
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Liste des participations de l'utilisateur",
+                content: new OA\JsonContent(
+                    type: 'array',
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: 'id', type: 'integer', description: 'Id de la participation'),
+                            new OA\Property(property: 'cours', type: 'integer', description: 'ID du cours'),
+                            new OA\Property(property: 'matiere', type: 'string', description: 'Type de la matière'),
+                            new OA\Property(property: 'crenaux', type: 'string', format: 'date', description: 'Date du créneau'),
+                            new OA\Property(property: 'heureDebut', type: 'string', format: 'time', description: 'Heure de début'),
+                            new OA\Property(property: 'heureFin', type: 'string', format: 'time', description: 'Heure de fin'),
+                            new OA\Property(property: 'validation', type: 'boolean', description: 'Validation de la participation'),
+                            new OA\Property(property: 'dateValidation', type: 'string', format: 'date-time', nullable: true, description: 'Date de validation'),
+                            new OA\Property(property: 'retard', type: 'integer', description: 'Retard en minutes'),
+                            new OA\Property(property: 'signé', type: 'string', enum: ['signé', 'non signé'], description: 'Statut de la signature')
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: "Utilisateur non trouvé"
+            )
+        ]
+    )]
+
+    #[Route('/users/{id}/participations', name: 'user_participation_list', methods: ['GET'])]
+    public function getParticipationsByUser(
+            int $id,
+            ParticiperRepository $participerRepository,
+            UserRepository $userRepository,
+            CoursRepository $coursRepository
+        ): JsonResponse {
+            //Récupère le user avec son id.
+            $user = $userRepository->find($id);
+            //Récupère la participation liée au user.
+            $participations = $user->getParticiper();
+           
+            //Déclaration de la liste résultats.
+            $resultats = [];
+
+            //Boucle dans les participations 
+            //Pour charque participations récupère:
+            //Matiere,date,heure début et fin,validaiton,signature et retard
+            foreach ($participations as $participation) {
+                $cours = $participation->getCours();
+               
+                
+                $resultats[]=[
+                    'id'=>$participation->getId(),
+                    'cours' => $cours->getId(),
+                    'matiere' => $cours->getMatiere()->getType(),
+                    'crenaux' => $cours->getCrenaux()->getDate()?->format('Y-m-d'),
+                    'heureDebut' => $cours->getCrenaux()->getHeureDebut()?->format('H:i:s'),
+                    'heureFin' => $cours->getCrenaux()->getHeureFin()?->format('H:i:s'),
+                    'validation' => $participation->isValidation(),
+                    'dateValidation' => $participation->getDateValidation(),
+                    'retard' => $participation->getRetard(),
+                    'signé' => $participation->getSignature() ? "signé" : "non signé",
+                    //'signature' => $participation->getSignature()
+                ];
+               
+            }
+            
+            return $this->json($resultats);
+        }
+
 
     #[Route('/reset/check-email', name: 'check_email', methods: ['POST'])]
+
     public function checkEmail(Request $request, UserRepository $userRepo): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -374,6 +463,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/reset/change-password', name: 'change_password', methods: ['POST'])]
+
     public function changePassword(Request $request, UserRepository $userRepo, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -398,8 +488,5 @@ class ApiController extends AbstractController
 
         return $this->json(['success' => true, 'message' => 'Mot de passe mis à jour avec succès']);
     }
-
-
-
 
 }
