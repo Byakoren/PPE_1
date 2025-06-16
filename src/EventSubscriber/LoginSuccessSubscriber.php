@@ -53,9 +53,10 @@ class LoginSuccessSubscriber implements EventSubscriberInterface
         $roles = $user->getRoles();
         $redirectPath = null;
 
+        //Redirection en fonction du roles suite au login:
         if (in_array('ROLE_ADMIN',$roles)){
-                //TODO Changer le app_login dans le redirect Path du ROLE_ADMIN
-                $redirectPath = $this->urlGenerator->generate("app_admin_dashboard"); // TODO: vérifier la route cible
+                
+                $redirectPath = $this->urlGenerator->generate("app_admin_dashboard"); 
             
             } elseif(in_array('ROLE_APPRENANT', $roles) || in_array('ROLE_INTERVENANT', $roles)){
                 $redirectPath = $this->urlGenerator->generate("app_planning_apprenant");

@@ -1,4 +1,4 @@
-# – Création du contrôleur ResetPasswordController
+# – Création du contrôleur ResetPasswordControllerPremiereConnexion
 
 ## 🎯 Objectif
 
@@ -9,7 +9,7 @@ Permettre à un utilisateur, via un lien reçu par e-mail, de définir un **nouv
 ## 📁 Fichier concerné
 
 ```bash
-src/Controller/ResetPasswordController.php
+src/Controller/ResetPasswordControllerPremiereConnexion.php
 
 ## Fonctionnalités incluses :
 

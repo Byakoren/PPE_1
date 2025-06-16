@@ -1,0 +1,83 @@
+{# filepath: templates/reset_password/request_email.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Réinitialisation de votre mot de passe</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #020024 0%, #1b2a59 50%, #273273 100%);
+            padding: 0;
+            margin: 0;
+        }
+        .mail-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #1b2a5922;
+            padding: 32px 28px;
+            color: #273273;
+        }
+        .mail-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #273273;
+            text-align: center;
+        }
+        .mail-btn {
+            display: inline-block;
+            background: #273273;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 24px 0;
+            transition: background 0.2s;
+        }
+        .mail-btn:hover {
+            background: #1b2a59;
+        }
+        .mail-footer {
+            font-size: 0.95em;
+            color: #888;
+            margin-top: 32px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 16px;
+            text-align: center;
+        }
+        .mail-content {
+            margin-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mail-container">
+        <div class="mail-title">Réinitialisation de votre mot de passe</div>
+        <div class="mail-content">
+            <p>Bonjour <strong>{{ user.prenom|default('') }} {{ user.nom|default('') }}</strong>,</p>
+            <p>Vous avez demandé la réinitialisation de votre mot de passe pour votre compte Gefor.</p>
+            <p>
+                Pour choisir un nouveau mot de passe, cliquez sur le bouton ci-dessous&nbsp;:
+            </p>
+            <p style="text-align: center;">
+                <a href="{{ resetUrl }}" class="mail-btn">
+                    Réinitialiser mon mot de passe
+                </a>
+            </p>
+            
+    </p>
+            <p>Ce lien expirera dans <strong>{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</strong>.</p>
+            <p>Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail.</p>
+        </div>
+        <div class="mail-footer">
+            Ceci est un message automatique, merci de ne pas y répondre.<br>
+            &copy; {{ "now"|date("Y") }} Groupe Gefor
+        </div>
+    </div>
+</body>
+</html>
