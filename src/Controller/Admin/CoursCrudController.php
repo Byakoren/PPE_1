@@ -51,6 +51,15 @@ class CoursCrudController extends AbstractCrudController
             $entityManager->persist($participer);
         }
 
+        // Ajout du formateur
+        $formateur = $entityInstance->getFormateur();
+        if ($formateur) {
+            $participerFormateur = new Participer();
+            $participerFormateur->setUser($formateur);
+            $participerFormateur->setCours($entityInstance);
+            $entityManager->persist($participerFormateur);
+        }
+
         // 5. Enfin, on persiste le cours normalement
         parent::persistEntity($entityManager, $entityInstance);
     }
