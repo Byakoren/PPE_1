@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020024] via-[#1b2a59] to-[#273273]">
+    <div class="max-w-lg w-full mx-auto bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
+        <div class="text-2xl font-semibold mb-5 text-[#273273] text-center">
+            Réinitialisation du mot de passe
+        </div>
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="w-full mb-4 px-4 py-3 rounded bg-red-100 text-red-700 text-center">
+                {{ flash_error }}
+            </div>
+        {% endfor %}
+        {{ form_start(requestForm) }}
+            <div class="mb-5 w-full">
+                {{ form_row(requestForm.email, {
+                    'attr': {
+                        'class': 'w-full px-4 py-3 border-2 border-[#273273] rounded-md text-[#273273] bg-[#f8fafc] focus:border-[#ff7f32] focus:outline-none text-base'
+                    },
+                    'label_attr': {
+                        'class': 'font-semibold mb-2 block text-[#273273] text-base'
+                    }
+                }) }}
+                <small class="block text-gray-500 mt-2">
+                    Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+                </small>
+            </div>
+            <div class="w-full text-center">
+                <button type="submit" class="inline-block bg-[#ff7f32] text-white font-semibold text-lg px-8 py-3 rounded-md mt-4 transition-all duration-200 hover:bg-[#e86c1a] hover:scale-105 border-none cursor-pointer">
+                    Envoyer le lien de réinitialisation
+                </button>
+            </div>
+        {{ form_end(requestForm) }}
+    </div>
+</div>
+{% endblock %}
