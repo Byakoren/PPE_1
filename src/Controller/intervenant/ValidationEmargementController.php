@@ -38,11 +38,11 @@ final class ValidationEmargementController extends AbstractController
 
         $heureDebut = $crenaux ? $crenaux->getHeureDebut() : null;
         $temp_retard = null;
-        if ($heureDebut instanceof DateTimeInterface) {
+        if ($heureDebut instanceof \DateTimeInterface) {
             $interval = $heureDebut->diff($heureActuelle);
             $temp_retard = ($heureActuelle > $heureDebut) ? ($interval->h * 60 + $interval->i) : 0;
-            dump($temp_retard); 
-            dump($heureDebut);
+           
+           
         }
 
         // Récupérer toutes les participations pour ce cours
@@ -60,10 +60,10 @@ final class ValidationEmargementController extends AbstractController
             } else {
                 $retard = $participation->getRetard();
             }
-
+            
             //calcule de l'heure de signature.
             $heure_de_signature = null;
-            if ($heureDebut instanceof DateTime && $retard !== null) {
+            if ($heureDebut instanceof \DateTime && $retard !== null) {
                 $heure_de_signature = (clone $heureDebut)->modify("+{$retard} minutes");
             }
 
@@ -74,20 +74,25 @@ final class ValidationEmargementController extends AbstractController
             'validation' => $participation->isValidation() ? 'Validé' : 'Non validé',
             'retard' => $retard,
             'id' => $participation->getId(),
-            'heureSignature' => $heure_de_signature
+            'heureSignature' => $heure_de_signature,
+            'role' => $user->getRoles()
             ];
             //Pour ajouter des commentaires pars validation et par apprenants.
             //'commentaire' => $participation->getCommentaire()];
             
             
         }
-
+        dump($apprenants);
         $liste_apprenants = $apprenants;
-        dump($participation->isValidation() ? 'Validé' : 'Non validé');
+        
         return $this->render('intervenant/validation_emargement/index.html.twig', [
             'controller_name' => 'Intervenant/ValidationEmargementController',
             'liste_apprenants' => $liste_apprenants,
             'cours' => $cour,
+            'matiere' => $cour->getMatiere(),
+            'heureDebut' => $cour->getCrenaux()->getHeureDebut(),
+            'heureFin' => $cour->getCrenaux()->getHeureFin(),
+            'dateCours' =>  $cour->getCrenaux()->getDate()
         ]);
     }
 

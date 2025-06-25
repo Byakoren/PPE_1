@@ -127,6 +127,20 @@ class ApiController extends AbstractController
         $user = $userRepo->find($data['idUser']);
         $cours = $coursRepo->find($data['idCours']);
         $signature = $data['signature'] ?? null;
+        //Récupération des valeurs pour le calcul du retard.
+        $heureActuelle = new \DateTime();
+        $heureDebut = $cours->getCrenaux() ? $cours->getCrenaux()->getHeureDebut() : null;
+        $temp_retard = null;
+
+        //Calcule du temp de retard par défaut.L'heure actuelle - l'heure de début du cours.
+         if ($heureDebut instanceof \DateTimeInterface) {
+            $interval = $heureDebut->diff($heureActuelle);
+            $temp_retard = ($heureActuelle > $heureDebut) ? ($interval->h * 60 + $interval->i) : 0;
+        } else{
+            $temp_retard = 0;
+        }
+           
+        
 
         if (!$user || !$cours || !$signature) {
             return $this->json(['success' => false, 'message' => 'Données invalides'], 400);
@@ -151,6 +165,9 @@ class ApiController extends AbstractController
             $participation->setValidation(false); 
             $participation->setRetard(0); 
         }
+
+        //Enregistre le retard
+        $participation->setRetard($temp_retard);
 
         $participation->setSignature($signature);
         $em->persist($participation);
@@ -415,6 +432,10 @@ class ApiController extends AbstractController
             //Déclaration de la liste résultats.
             $resultats = [];
 
+            $participations = $user->getParticiper()->toArray();
+            usort($participations, function($a, $b) {
+                return $a->getCours()->getCrenaux()->getDate() <=> $b->getCours()->getCrenaux()->getDate();
+            });
             //Boucle dans les participations 
             //Pour charque participations récupère:
             //Matiere,date,heure début et fin,validaiton,signature et retard
