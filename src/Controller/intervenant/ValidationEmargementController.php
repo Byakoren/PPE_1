@@ -82,7 +82,7 @@ final class ValidationEmargementController extends AbstractController
             
             
         }
-        dump($apprenants);
+        //dump($apprenants);
         $liste_apprenants = $apprenants;
         
         return $this->render('intervenant/validation_emargement/index.html.twig', [
